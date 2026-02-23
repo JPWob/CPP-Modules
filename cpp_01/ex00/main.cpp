@@ -23,7 +23,7 @@ void ZombieMode2()
 {
 	std::string name;
 	std::vector<Zombie*> allZombies;
-	std::cout << "Nice, Give me all the names, then enter DONE to announce all Zombies\n";
+	std::cout << "Nice. Name as many Zombies as you like.\nEnter DONE to announce all Zombies\n";
 	size_t i = 0;
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	while(1)
