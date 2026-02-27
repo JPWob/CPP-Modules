@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp Zombie.cpp zombieHorde.cpp
-NAME = brainz!
+NAME = Moar_brainz!
 
 # Object files go into .o/ folder
 OBJDIR = .o

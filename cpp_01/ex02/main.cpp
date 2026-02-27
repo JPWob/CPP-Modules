@@ -1,4 +1,5 @@
-#include "Zombie.hpp"
+#include <iostream>
+#include <string>
 
 int main ()
 {
@@ -8,8 +9,13 @@ int main ()
 	std::string &stringREF = name; //alias of name; another name bound to the same storage location
 	
 	
-	
-	
+	std::cout << "Address of name:\t" << &name << std::endl;
+	std::cout << "Address of PTR:\t\t" << &stringPTR << std::endl;
+	std::cout << "Address of REF:\t\t" << &stringREF << std::endl;
+
+	std::cout << "Value of name:\t\t" << name << std::endl;
+	std::cout << "Value of PTR:\t\t" << *stringPTR << std::endl;
+	std::cout << "Value of REF:\t\t" << stringREF << std::endl;
 	
 	return 0;
 }

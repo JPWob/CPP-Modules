@@ -11,6 +11,7 @@ class Zombie
 	Zombie(std::string name);
 
 	void	announce();
+	//static means these functions belong to the class itself, not the individual object instance
 	static Zombie* newZombie( std::string name );
 	static void	randomChump( std::string name );
 

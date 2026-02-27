@@ -3,7 +3,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp Zombie.cpp zombieHorde.cpp
+SRCS = main.cpp
 NAME = HI_THIS_IS_BRAIN
 
 # Object files go into .o/ folder
