@@ -1,22 +1,32 @@
-#include <iostream>
-#include <string>
+#include "HumanA.hpp"
+#include "HumanB.hpp"
 
 int main ()
 {
-	std::string name = "Hi THIS BRAIN";
-	
-	std::string *stringPTR = &name; //stores address of name
-	std::string &stringREF = name; //alias of name; another name bound to the same storage location
-	
-	
-	std::cout << "Address of name:\t" << &name << std::endl;
-	std::cout << "Address of PTR:\t\t" << &stringPTR << std::endl;
-	std::cout << "Address of REF:\t\t" << &stringREF << std::endl;
+	Weapon weapon_A("Bratpfanne");
+	HumanA Gollum(weapon_A, "Gollum"); //init with name and weapon
+	Gollum.attack();
+	weapon_A.setType("Long Fingernails");
+	Gollum.attack();
 
-	std::cout << "Value of name:\t\t" << name << std::endl;
-	std::cout << "Value of PTR:\t\t" << *stringPTR << std::endl;
-	std::cout << "Value of REF:\t\t" << stringREF << std::endl;
-	
+	HumanB Faramir("Faramir"); //no wepaon!
+	Faramir.attack();
+	Faramir.set_weapon("Schwert"); //give weapon after init HumanB
+	Faramir.attack();
+
+	Weapon weapon_B("Gabel");
+	HumanB Gimmli("Gimmli", &weapon_B); //give weapon directly to Gimmli //pass pointer
+	Gimmli.attack();
+
+
+
+
+
+
+
+
+
+
 	return 0;
 }
 

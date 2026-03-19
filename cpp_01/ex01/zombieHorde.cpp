@@ -6,10 +6,10 @@ Zombie* Zombie::zombieHorde( int N, std::string name )
 	if (N <= 0)
 		return nullptr;
 
-	Zombie *horde = new Zombie[10];
+	Zombie *horde = new Zombie[N];
 	while(i < N)
 	{
-		horde[i].name = name;
+		horde[i].name = name;  //access member variable name through real object instances (horde[i])
 		i++;
 	}
 	return horde;

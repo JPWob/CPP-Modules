@@ -1,14 +1,15 @@
 #include "Weapon.hpp"
 
-const std::string& Weapon::getType()
+Weapon::Weapon(std::string type): _type(type) {}
+
+const std::string& Weapon::getType() const
 {
-    return type; //no copy is made, cannot be nullptr, no ptr syntax
+    return _type; //no copy is made, cannot be nullptr, no ptr syntax
 }
 
-
-void Weapon::setType(std::string settype)
+void Weapon::setType(std::string newtype)
 {
-    type = settype;
+    _type = newtype;
     return;
 }
 
