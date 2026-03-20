@@ -12,8 +12,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
-	
-	std::string filename = argv[1]; //Replace every occurrence of s1 with s2
+	//Replace every occurrence of s1 with s2
+	std::string filename = argv[1]; 
     std::string s1 = argv[2];
     std::string s2 = argv[3];
 	
@@ -52,9 +52,12 @@ int main(int argc, char **argv)
 			result += content.substr(pos); //It automatically goes from pos to the eof
 			break;
 		}
+
 		result += content.substr(pos, found - pos);
 		result += s2;
 		pos = found + lenght_s1;
+
+		//USE INSERT AND ERASE INSTEAD OF REPLACE
 	}
 
 	// Step 5: Write result to output file
@@ -64,7 +67,8 @@ int main(int argc, char **argv)
 
     if (!outfile.is_open())
     {
-        std::cout << "Error: could not create file " << outfilename << std::endl;
+        infile.close();
+		std::cout << "Error: could not create file " << outfilename << std::endl;
         return 1;
     }
     outfile << result;
@@ -87,7 +91,7 @@ infile is an std::ifstream
 std::stringstream
 	- reads or writes from a string in memory
 	- contains a std::stringbuf, which buffers the entire string in memory.
-	- ou can immediately do .str() on a stringstream to get the whole content
+	- you can immediately do .str() on a stringstream to get the whole content
 	- use: Parsing a string into numbers, building strings dynamically, replacing substrings
 
 // ifstream

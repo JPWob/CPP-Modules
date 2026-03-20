@@ -1,5 +1,6 @@
 #include "Zombie.hpp"
 #include <vector>
+#include <limits>
 
 void ZombieMode1()
 {

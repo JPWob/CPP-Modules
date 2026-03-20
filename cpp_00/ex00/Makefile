@@ -16,7 +16,7 @@ all: $(NAME)
 
 # Object files go into .o/ folder
 OBJDIR = .o
-OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJS = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
 # Rules
 all: $(NAME)

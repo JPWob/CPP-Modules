@@ -1,7 +1,10 @@
 #include <iostream>
 
 int main()
-{
+{	
+
+	// !!!! $>./megaphone "shhhhh... I think the students are asleep..."
+
     std::string line;
     std::getline(std::cin, line);
 
@@ -22,6 +25,6 @@ int main()
     std::cout << line << std::endl;
 }
 
-// std::cout << "As char: " << line[i];
-// std::cout << " As int: " << static_cast<int>(line[i]) << std::endl;
+// std::cout << "As char: " << line[i]  << std::endl;
+// std::cout << "As int: " << static_cast<int>(line[i]) << std::endl;
 

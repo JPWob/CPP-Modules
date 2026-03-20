@@ -32,14 +32,13 @@ void PhoneBook::search()
 	while(1)
 	{
 		std::getline(std::cin, line);
-		if(line.length() == 1 && std::isdigit(line[0]))
+		index = line[0] - '0';
+		if(line.length() == 1 && std::isdigit(line[0]) && index < count)
 		{
-			index = line[0] - '0';
-			if (index <= count)
-				break;
+			contacts[index].show_full();
+			break;
 		}
 		else
-			std::cout << "Enter valid index (0 to " << count << ')' << std::endl;
+			std::cout << "Enter valid index (0 to " << count - 1 << ')' << std::endl;
 	}
-	contacts[index].show_full();
 }
