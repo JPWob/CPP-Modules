@@ -22,7 +22,7 @@ void HumanB::attack()
 
 void HumanB::set_weapon(std::string name)
 {
-	Weapon w(name);
+	Weapon *w = new Weapon(name);
 
-	_weapon = &w;
+	_weapon = w;
 }

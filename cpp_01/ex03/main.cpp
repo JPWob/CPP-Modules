@@ -4,6 +4,8 @@
 int main ()
 {
 	Weapon weapon_A("Bratpfanne");
+	Weapon* weaponb = NULL;
+
 	HumanA Gollum(weapon_A, "Gollum"); //init with name and weapon
 	Gollum.attack();
 	weapon_A.setType("Long Fingernails");
@@ -15,16 +17,8 @@ int main ()
 	Faramir.attack();
 
 	Weapon weapon_B("Gabel");
-	HumanB Gimmli("Gimmli", &weapon_B); //give weapon directly to Gimmli //pass pointer
+	HumanB Gimmli("Gimmli", weaponb); //give weapon directly to Gimmli //pass pointer
 	Gimmli.attack();
-
-
-
-
-
-
-
-
 
 
 	return 0;

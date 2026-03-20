@@ -6,7 +6,7 @@ class HumanB {
 
 	public:
 
-	HumanB(std::string n = "HumanB", Weapon* w = nullptr);
+	HumanB(std::string n = "HumanB", Weapon* w = NULL);
 	void set_weapon(std::string name);
 	void attack();
 
