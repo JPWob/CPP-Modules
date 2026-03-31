@@ -23,26 +23,29 @@ void ZombieMode1()
 void ZombieMode2()
 {
 	std::string name;
-	std::vector<Zombie*> allZombies;
-	std::cout << "Nice. Name as many Zombies as you like.\nEnter DONE to announce all Zombies\n";
-	size_t i = 0;
+	size_t		i = 0;
+	Zombie 		**HeapZombie = new Zombie* [10]; //allocating array of 10 pointers, no zombies exist yet
+	
+	std::cout << "Nice. Name up to 10 Zombies as you like.\nEnter DONE to announce all Zombies\n";
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	while(1)
+	while(i < 10)
 	{
 		std::cout << "Name your Zombie:\n>>";
 		if (!std::getline(std::cin, name) || name == "DONE")
         	break;
 		if (name.empty())
         	continue;
-		allZombies.push_back(Zombie::newZombie(name)); 
-	}
-	while(i < allZombies.size())
-	{
-		allZombies[i]->announce();
-		delete allZombies[i];
+		HeapZombie[i] = Zombie::newZombie(name); //returns pointer to Zombie
 		i++;
 	}
-	allZombies.clear();
+	i = 0;
+	while(HeapZombie[i])
+	{
+		HeapZombie[i]->announce();
+		delete HeapZombie[i];
+		i++;
+	}
+	delete[] HeapZombie;
 	std::cout << "All done!\n";
 }
 
@@ -51,13 +54,15 @@ int main ()
 	char choice = 0;
 
 	std::cout << "Choose zombie creation mode:\n"
-	<< "[1] Create one zombie at a time and let it announce immediately.\n"
-	<< "[2] Create multiple zombies first, then let them all announce.\n";
+	<< "[1] Create one zombie at a time and let it announce immediately (Stack allocation).\n"
+	<< "[2] Create multiple zombies first, then let them all announce (Heap allocation).\n";
 	while(choice != '1' && choice != '2')
 	{
 		std::cout << "Enter choice (1/2): \n>>";
 		std::cin >> choice;
 	}
+	if (!choice)
+        return(0); //EOF
 	if(choice == '1')
 		ZombieMode1();
 	else	

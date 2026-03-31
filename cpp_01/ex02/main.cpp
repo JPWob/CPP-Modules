@@ -3,19 +3,19 @@
 
 int main ()
 {
-	std::string name = "Hi THIS BRAIN";
+	std::string name = "Hi THIS IS BRAIN";
 	
 	std::string *stringPTR = &name; //stores address of name
 	std::string &stringREF = name; //alias of name; another name bound to the same storage location
 	
 	
-	std::cout << "Address of name:\t" << &name << std::endl;
-	std::cout << "Address of PTR:\t\t" << &stringPTR << std::endl;
-	std::cout << "Address of REF:\t\t" << &stringREF << std::endl;
+	std::cout << "Address of name (&name):\t\t" << &name << std::endl;
+	std::cout << "Address of PTR (&stringPTR):\t\t" << &stringPTR << std::endl;
+	std::cout << "Address of REF (&stringREF):\t\t" << &stringREF << std::endl;
 
-	std::cout << "Value of name:\t\t" << name << std::endl;
-	std::cout << "Value of PTR:\t\t" << *stringPTR << std::endl;
-	std::cout << "Value of REF:\t\t" << stringREF << std::endl;
+	std::cout << "Value of name:\t\t\t\t" << name << std::endl;
+	std::cout << "Value pointed to by PTR (*stringPTR):\t" << *stringPTR << std::endl;
+	std::cout << "Value pointed to by REF (stringREF):\t" << stringREF << std::endl;
 	
 	return 0;
 }

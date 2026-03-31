@@ -6,19 +6,18 @@
 
 class Zombie
 {
-	public :
+	private :
+	std::string _name; //non static member object
 
+	public :
 	Zombie();
 	Zombie(std::string name);
 
 	void	announce();
-	static Zombie* zombieHorde( int N, std::string name ); //zombieHorde() does not depend on an existing zombie.
-
-	private :
-	
-	std::string name; //non static member object
+	void	set_name(std::string name);
 };
 
+Zombie* zombieHorde( int N, std::string name ); //zombieHorde() does not depend on an existing zombie.
 
 #endif
 

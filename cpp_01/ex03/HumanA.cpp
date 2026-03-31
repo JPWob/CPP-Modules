@@ -1,7 +1,7 @@
 #include "HumanA.hpp"
 
-HumanA::HumanA(Weapon& w, const std::string& n) 
-    : _weaponA(w), _name(n) {} //private_member(parameter)
+HumanA::HumanA(const std::string& n, Weapon& w) 
+    : _name(n), _weaponA(w)  {} //private_member(parameter)
 
 void HumanA::attack()
 {

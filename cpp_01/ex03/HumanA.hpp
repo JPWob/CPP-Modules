@@ -4,15 +4,13 @@
 
 class HumanA {
 
-    public:
-
-    HumanA(Weapon& w, const std::string& n = "HumanA");
+public:
+    HumanA(const std::string& n, Weapon& w);
     void attack();
 
-    private:
-
+private:
+	std::string _name;
     Weapon& _weaponA; //HumanA does not own the weapon //It references an existing Weapon
-    std::string _name;
 };
 
 #endif

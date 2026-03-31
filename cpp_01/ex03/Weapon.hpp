@@ -10,7 +10,6 @@ class Weapon {
         const std::string& getType() const; //does not change the object → should be const.
         void setType(std::string newtype); //changes the object → cannot be const.
 
-
     private:
 
     std::string _type;

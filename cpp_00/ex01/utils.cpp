@@ -20,5 +20,5 @@ std::string format(std::string str)
 	if( str.length() > 10)
 		return (str.substr(0, 9) + '.' );
 	else
-		return (str.substr(0, 10));
+		return (str);
 }

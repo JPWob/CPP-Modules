@@ -1,7 +1,7 @@
 #include "HumanB.hpp"
 
-HumanB::HumanB(std::string n, Weapon* w) 
-	: _weapon(w), _name(n) {};
+HumanB::HumanB(std::string n) 
+	: _name(n), _weapon(NULL){};
 
 void HumanB::attack()
 {
@@ -20,9 +20,7 @@ void HumanB::attack()
 	}
 }
 
-void HumanB::set_weapon(std::string name)
+void HumanB::setWeapon(Weapon &w)
 {
-	Weapon *w = new Weapon(name);
-
-	_weapon = w;
+	_weapon = &w;
 }

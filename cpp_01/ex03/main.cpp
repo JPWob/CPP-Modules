@@ -1,27 +1,44 @@
 #include "HumanA.hpp"
 #include "HumanB.hpp"
 
-int main ()
+// int main ()
+// {
+// 	Weapon weapon_A("Bratpfanne");
+
+// 	HumanA Gollum(weapon_A, "Gollum"); //init with name and weapon
+// 	Gollum.attack();
+// 	weapon_A.setType("Long Fingernails");
+// 	Gollum.attack();
+
+// 	std::cout << std::endl;
+// 	std::cout << "-> Construct HumanB Faramir without Weapon\n";
+// 	HumanB Faramir("Faramir"); //no wepaon!
+// 	Faramir.attack();
+// 	//std::cout << "-> Set Weapon for Faramir\n";
+// 	//Faramir.set_weapon("Schwert"); //give weapon after init HumanB
+// 	//Faramir.attack();
+
+// 	return 0;
+// }
+
+int main()
 {
-	Weapon weapon_A("Bratpfanne");
-	Weapon* weaponb = NULL;
-
-	HumanA Gollum(weapon_A, "Gollum"); //init with name and weapon
-	Gollum.attack();
-	weapon_A.setType("Long Fingernails");
-	Gollum.attack();
-
-	HumanB Faramir("Faramir"); //no wepaon!
-	Faramir.attack();
-	Faramir.set_weapon("Schwert"); //give weapon after init HumanB
-	Faramir.attack();
-
-	Weapon weapon_B("Gabel");
-	HumanB Gimmli("Gimmli", weaponb); //give weapon directly to Gimmli //pass pointer
-	Gimmli.attack();
-
-
-	return 0;
+	{
+		Weapon club = Weapon("crude spiked club");
+		HumanA bob("Bob", club);
+		bob.attack();
+		club.setType("some other type of club");
+		bob.attack();
+	}
+	{
+		Weapon club = Weapon("crude spiked club");
+		HumanB jim("Jim");
+		jim.setWeapon(club);
+		jim.attack();
+		club.setType("some other type of club");
+		jim.attack();
+	}
+return 0;
 }
 
 
