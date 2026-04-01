@@ -5,20 +5,22 @@
 
 class PhoneBook
 {
-	public:
 
-	PhoneBook(); // custom constructor would be PhoneBook(int idx = 0, int cnt = 0) : index(idx), count(cnt) {}
+private:
+
+	static const int _max_contacts = 3;
+	Contact contacts[_max_contacts];
+	int _index;
+	int _count;  //count necesary, because of overwriting mechanism with index
+
+public:
+
+	PhoneBook(); //initialize index and count
 	~PhoneBook(); //not necesary (implicitly-declared destructor from the C++ Standard Library rules of object lifetime)
 
 	void add();
 	void search();
 
-	private:
-
-	static const int max_contacts = 3;
-	Contact contacts[max_contacts];
-	int index;
-	int count;
 };
 
 #endif

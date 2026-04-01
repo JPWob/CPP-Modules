@@ -7,7 +7,7 @@ SRCS = main.cpp Contact.cpp PhoneBook.cpp utils.cpp
 NAME = phonebook
 
 # Object files go into .o/ folder
-OBJDIR = .o
+OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 
 # Rules

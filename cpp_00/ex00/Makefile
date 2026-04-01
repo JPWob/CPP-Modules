@@ -15,7 +15,7 @@ NAME = megaphone
 all: $(NAME)
 
 # Object files go into .o/ folder
-OBJDIR = .o
+OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/, $(SRC:.cpp=.o))
 
 # Rules
