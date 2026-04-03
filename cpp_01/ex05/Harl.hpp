@@ -1,20 +1,21 @@
 #include <iostream>
 #include <string>
+#include <stdlib.h>
 
 class Harl {
 
-public:
-
-void complain( std::string level);
-
 private:
-void debug( void );
-void info( void );
-void warning( void );
-void error( void );
+    void _debug(void);
+    void _info(void);
+    void _warning(void);
+    void _error(void);
+    void _enough (void);
 
-}
+public:
+    void complain(std::string level);
 
+
+};
 
 /*
 

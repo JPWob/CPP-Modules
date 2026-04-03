@@ -3,11 +3,11 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp
-NAME = Sed_is_for_losers
+SRCS = main.cpp Harl.cpp
+NAME = Harl
 
 # Object files go into .o/ folder
-OBJDIR = .o
+OBJDIR = .obj
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 
 # Rules
