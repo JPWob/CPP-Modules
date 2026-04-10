@@ -16,12 +16,12 @@ Fixed::Fixed(const float f){
 }
 
 float Fixed::toFloat( void ) const{
-	std::cout << "tofloat memberfunction called" << std::endl;
-	return (float(this->getRawBits() / (1 << _bits)));
+	//std::cout << "tofloat memberfunction called" << std::endl;
+	return ( (float)this->getRawBits() / (1 << _bits) );
 }
 
 int Fixed::toInt( void ) const{
-	std::cout << "toInt memberfunction called" << std::endl;
+	//std::cout << "toInt memberfunction called" << std::endl;
 	return(int(this->getRawBits() >> _bits)); //fixp >> 8 and _fixp / 256 are the same, but >> much faster
 }
 
@@ -53,13 +53,13 @@ Fixed& Fixed::operator=(const Fixed& src){
 
 int Fixed::getRawBits( void ) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
+	//std::cout << "getRawBits member function called" << std::endl;
 	return _fixp;
 }
 
 
 void Fixed::setRawBits( int const raw ){
-	std::cout << "setRawBits member function called" << std::endl;
+	//std::cout << "setRawBits member function called" << std::endl;
 	_fixp = raw;
 }
 

@@ -16,13 +16,13 @@ public:
 	
 	int		getRawBits( void ) const;
 	void	setRawBits( int const raw );
-	float	toFloat( void ) const;
-	int toInt( void ) const;
-	Fixed& operator=(const Fixed& src);
+	float	toFloat( void ) const;		//new
+	int toInt( void ) const;			//new
+	Fixed& operator=(const Fixed& src);	//new
 
 };
 
-std::ostream& operator<<(std::ostream &out,const Fixed &fixed);
+std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //overload of insertion operator
 
 //Why return out it if they already have it?
 //They need it because of Chaining: std::cout << a << b
