@@ -1,0 +1,23 @@
+#ifndef ANIMAL_HPP
+#define ANIMAL_HPP
+
+#include <iostream>
+
+class Animal{
+
+protected:
+    std::string _type;
+public:
+	Animal();
+	virtual ~Animal();
+    virtual void makeSound();
+    std::string& getType();
+};
+
+#endif
+
+/*
+Only Animal::~Animal() runs
+Cat::~Cat() and Dog::~Dog() will NOT run
+_Brain will NOT be deleted → REAL leak
+*/
