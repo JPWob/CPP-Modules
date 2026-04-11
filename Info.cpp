@@ -1,4 +1,14 @@
 
+1. Shallow Copy (The Default)
+A shallow copy copies the values of the member variables exactly as they are.
+
+If the member is an int, it copies the number. (Safe)
+
+If the member is a pointer (like Brain*), it copies the memory address. (Dangerous)
+
+
+//////////////////////////////////////////////////////
+
 1. The Containers: int vs. float
     
 In most modern systems (like the C++ code you are writing), 

@@ -33,7 +33,7 @@ When you defined FragTrap and ScavTrap, you didn't give them
  a "default" constructor (one with no parameters). 
 You told the compiler: "Every time a FragTrap is born, it must have a name."
 
-The "Virtual" Bypass
+The "" Bypass
 Here is the weird part of the Diamond Problem:
 In a normal inheritance chain, ScavTrap would call ClapTrap. 
 But in a Virtual Inheritance chain, the "most derived" class 

@@ -10,7 +10,7 @@ protected:
 
 public:
     ClapTrap(std::string name);
-    ~ClapTrap();
+    virtual ~ClapTrap(); // Adding 'virtual' here ensures the most derived destructor is called first
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
