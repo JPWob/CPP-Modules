@@ -1,4 +1,20 @@
 
+
+
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!*.cpp
+!*.hpp
+!*.tpp
+!Makefile
+# etc...
+
+# ...even if they are in subdirectories
+!*/
+
 1. Shallow Copy (The Default)
 A shallow copy copies the values of the member variables exactly as they are.
 
