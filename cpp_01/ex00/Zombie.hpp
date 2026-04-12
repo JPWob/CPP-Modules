@@ -6,19 +6,19 @@
 
 class Zombie
 {
-	public :
+private :
+	std::string _name;
 
+public :
 	Zombie(std::string name);
+	Zombie();
+	~Zombie();
 
 	void	announce();
-	//static means these functions belong to the class itself, not the individual object instance
-	static Zombie* newZombie( std::string name );
-	static void	randomChump( std::string name );
-
-	private :
 	
-	std::string name;
 };
 
+Zombie* newZombie( std::string name );
+void	randomChump( std::string name );
 
 #endif

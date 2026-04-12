@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
-NAME = HI_THIS_IS_BRAIN
+NAME = Unnecessary_violence
 
 # Object files go into .o/ folder
 OBJDIR = .o

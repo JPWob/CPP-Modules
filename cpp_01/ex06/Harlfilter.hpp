@@ -13,7 +13,6 @@ private:
 public:
     void complain(std::string level);
 
-
 };
 
 /*

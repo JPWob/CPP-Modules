@@ -1,79 +1,60 @@
 #include <iostream>
-#include <sstream>
 #include <fstream>
 #include <string>
 
 int main(int argc, char **argv)
 {
-	
-	if (argc != 4)
+    if (argc != 4)
     {
-        std::cerr << "Usage: " << argv[0] << " filename s1 s2" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <filename> <s1> <s2>" << std::endl;
         return 1;
     }
 
-	//Replace every occurrence of s1 with s2
-	std::string filename = argv[1]; 
+    std::string filename = argv[1];
     std::string s1 = argv[2];
     std::string s2 = argv[3];
-	
-	if (s1.empty())
+
+    if (s1.empty())
     {
         std::cerr << "Error: s1 cannot be empty" << std::endl;
         return 1;
     }
-	std::ifstream infile;
-	infile.open(filename.c_str());  //std::ifstream infile(filename.c_str()); //Clean and compact.
-
-    if (!infile)
+    std::ifstream infile(filename.c_str());
+    if (!infile.is_open())
     {
-        std::cerr << "Error opening file " << filename << std::endl;
+        std::cerr << "Error: could not open " << filename << std::endl;
         return 1;
     }
-
-	std::stringstream buffer;
-	buffer << infile.rdbuf();
-	std::string content = buffer.str();
-	infile.close(); // close the input file
-
-	std::string result;  // this will be the new file content
-    std::size_t pos = 0;
-    std::size_t found;
-	std::size_t eof = content.length();
-	std::size_t lenght_s1 = s1.length();
-
-	while(pos < eof)
-	{
-		found = content.find(s1, pos); 
-
-		//When .find doesn’t find the substring it returns std::string::npos, largest possible size_t value
-		if(found == std::string::npos)
-		{
-			result += content.substr(pos); //It automatically goes from pos to the eof
-			break;
-		}
-
-		result += content.substr(pos, found - pos);
-		result += s2;
-		pos = found + lenght_s1;
-
-		//USE INSERT AND ERASE INSTEAD OF REPLACE
-	}
-
-	// Step 5: Write result to output file
-    std::string outfilename = filename + ".replace";
-    std::ofstream outfile;
-    outfile.open(outfilename.c_str());
-
+    std::ofstream outfile((filename + ".replace").c_str());
     if (!outfile.is_open())
     {
         infile.close();
-		std::cout << "Error: could not create file " << outfilename << std::endl;
+        std::cerr << "Error: could not create output file" << std::endl;
         return 1;
     }
-    outfile << result;
+    std::string line;
+    size_t len_s1 = s1.length();
+    size_t len_s2 = s2.length();
+
+    while (std::getline(infile, line))
+    {
+        size_t pos = 0;
+        while (1)
+        {
+			pos = line.find(s1, pos);
+            if(pos == std::string::npos)
+				break;
+			line.erase(pos, len_s1);    // Remove s1
+            line.insert(pos, s2);       // Insert s2 
+            pos += (len_s2);            // important in case s2 contains s1!
+        }
+        outfile << line;
+        if (!infile.eof())
+            outfile << std::endl;// std::getline removes the newline character, so we must re-add it if we haven't reached the end of the file yet.
+    }
+
+    infile.close();
     outfile.close();
-    std::cout << "Replacement finished. Output file: " << outfilename << std::endl;
     return 0;
 }
 

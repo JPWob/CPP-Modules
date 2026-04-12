@@ -1,18 +1,18 @@
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
+
 #include <iostream>
 #include <string>
 
 class Weapon {
+private:
+	std::string _type;
 
-    public:
-        Weapon(std::string type);
-        const std::string& getType() const; //does not change the object → should be const.
-        void setType(std::string newtype); //changes the object → cannot be const.
+public:
+    Weapon(std::string type);
+    const std::string& getType() const; //does not change the object → should be const.
+    void setType(std::string newtype); 	//changes the object → cannot be const.
 
-    private:
-
-    std::string _type;
 };
 
 #endif

@@ -3,14 +3,14 @@
 #include "Weapon.hpp"
 
 class HumanA {
+private:
+	std::string _name;
+	Weapon& _weaponA; //HumanA does not own the weapon //It references an existing Weapon
 
 public:
     HumanA(const std::string& n, Weapon& w);
     void attack();
 
-private:
-	std::string _name;
-    Weapon& _weaponA; //HumanA does not own the weapon //It references an existing Weapon
 };
 
 #endif

@@ -17,13 +17,14 @@ Fixed::Fixed(const Fixed& src){
 }
 
 //=operator overloader: this = src
-Fixed& Fixed::operator=(const Fixed& src){
+Fixed Fixed::operator=(const Fixed& src){
 	std::cout << "Copy assignment operator called" << std::endl;
-	if (this != &src) { // Check addresses
+	if (this != &src) { // Check addresses is good practice for later, when you have to delete existing *ptr memory to assign new one, otherwise deletion of own data possible
         this->setRawBits(src.getRawBits());
     }
 	return *this; //returns a reference, not a copy
 }
+
 
 int Fixed::getRawBits( void ) const
 {
@@ -36,3 +37,48 @@ void Fixed::setRawBits( int const raw ){
 	_fixp= raw;
 }
 
+
+/*Returning a reference from the Assignment operator=  is the standard practice 
+in C++ because it allows for operator chaining and avoids unnecessary overhead.
+Eg: a = b = c;
+
+	1.	b = c is executed first.
+	2.	a = b is executed secondly
+	!	if b = c does return (void) a has nothing to assign itself to: a = void(b=c)
+	-> If your operator returned void, the code a = b = c; would result in a compilation error because a would be trying to assign itself to "nothing."
+
+Also: Efficiency!
+	-> If you returned by value (Fixed instead of Fixed&), the compiler would have to:
+	1.	Create a temp cpy of the object that was returned == Call Copy Construtor for temp(b) and do a = temp;
+	!	In C++, temporary objects (also called rvalues) are short-lived. Their "life" is strictly defined
+		- Born: At the return statement
+		- Used: In the expression that called the function (a = b = c)
+		- Destroyed at semicolon
+	2. The line of code ends at the semicolon ;
+*/
+
+
+/*When is it useful to return by value?
+
+
+
+*/
+
+/*
+//Shallow copy of data ptr
+Box::Box(const Box& src) {
+    this->data = src.data; // Both now point to the same memory!
+}
+
+// Deep Copy Constructor
+    Box(const Box& src) {
+        if (src.data != nullptr) {
+            // 1. Allocate new memory
+            this->data = new int; 
+            // 2. Copy the value from src to the new memory
+            *(this->data) = *(src.data); 
+        } 
+			else {
+            this->data = nullptr;
+        }
+*/

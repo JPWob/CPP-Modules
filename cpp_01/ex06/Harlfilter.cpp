@@ -18,7 +18,7 @@ void Harl::complain(std::string level)
 			break;
 	switch(i)
 	{
-		case 0:(this->*functionarray[0])();
+		case 0:(this->*functionarray[0])(); 
 		case 1:(this->*functionarray[1])();
         case 2:(this->*functionarray[2])();
         case 3:(this->*functionarray[3])(); break;

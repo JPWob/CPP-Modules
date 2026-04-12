@@ -13,7 +13,7 @@ public:
 
 	int getRawBits( void ) const;
 	void setRawBits( int const raw );
-	Fixed& operator=(const Fixed& src);
+	Fixed operator=(const Fixed& src);
 
 };
 

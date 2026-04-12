@@ -5,7 +5,7 @@
 // {
 // 	Weapon weapon_A("Bratpfanne");
 
-// 	HumanA Gollum(weapon_A, "Gollum"); //init with name and weapon
+// 	HumanA Gollum("Gollum", weapon_A); //init with name and weapon
 // 	Gollum.attack();
 // 	weapon_A.setType("Long Fingernails");
 // 	Gollum.attack();
@@ -14,9 +14,10 @@
 // 	std::cout << "-> Construct HumanB Faramir without Weapon\n";
 // 	HumanB Faramir("Faramir"); //no wepaon!
 // 	Faramir.attack();
-// 	//std::cout << "-> Set Weapon for Faramir\n";
-// 	//Faramir.set_weapon("Schwert"); //give weapon after init HumanB
-// 	//Faramir.attack();
+// 	std::cout << "-> Set Weapon for Faramir\n";
+// 	Weapon weapon("Schwert");
+// 	Faramir.setWeapon(weapon); //give weapon after init HumanB
+// 	Faramir.attack();
 
 // 	return 0;
 // }

@@ -4,7 +4,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp Harlfilter.cpp
-NAME = Harlfilter
+NAME = harlfilter
 
 # Object files go into .o/ folder
 OBJDIR = .obj

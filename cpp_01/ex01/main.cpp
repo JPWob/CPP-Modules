@@ -14,9 +14,7 @@ int main ()
 		horde[i].announce();
 		i++;
 	}
-	i = 0;
 	delete[] horde;
-
 	return 0;
 }
 
