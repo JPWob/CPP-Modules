@@ -20,7 +20,8 @@ Raw Fixed Point Value: 1280 //
 
 
 Converting a constant integer to fixed-point is just re-scaling the value,
-so that it sits to the left of an imaginary binary point. 
+so that it sits to the left of an imaginary binary point.
+
 It allows you to perform "decimal" math using only integer logic, 
 which is a lifesaver in embedded systems or high-performance graphics.
 	- Hardware Limitations: Many small microcontrollers (microwave, car sensors, or simple calculators) 

@@ -17,7 +17,8 @@ int main(){
     frag.highFivesGuys();
     frag.attack("Clap");
     std::cout << std::endl;
-    dia.attack("clap");
+    
+	dia.attack("clap");
     dia.guardGate();
     dia.whoAmI();
     std::cout << std::endl;

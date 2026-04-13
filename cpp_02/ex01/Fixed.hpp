@@ -24,29 +24,27 @@ public:
 
 std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //overload of insertion operator
 
-//Why return out it if they already have it?
-//They need it because of Chaining: std::cout << a << b
-// 1. (std::cout << a) runs. 
-// 2. It returns std::cout.
-// 3. The expression now looks like: (The returned std::cout) << b;
-// 4. Now the second << can run because it has a stream on its left side.
 
 /*
-1. Overloading as a Member Function
-	If you define operator+ inside your class, the "left side" is implicit. 
-	It is the object itself (this).
-	Left side: The object the function belongs to (the this pointer).
-	Right side: The single parameter passed in the brackets.
-	like
-	Fixed& operator=(const Fixed& src)
+Overloading Operators 
+										LEFT SIDE					RIGHT SIDE
+RULE: return_type operator??(object calling the functinon, Parameter passed to the function)
 
-2. Overloading as a Non-Member Function
-	std::cout is a std::ostream
-	You can't go into the official C++ library and add a member function to ostream
-	So if zou want to e.g. std::cout << MyClass
-	So you define a non-Member Function with left << right
-		returntype operator<<(leftside,rightside);
-		std::ostream& operater<<(std::ostream& out, MyClass )
+-> The object on the left of the operator is the one "calling" the function.
+
+1. Overloading as a Member Function 
+	-> left side implicit -> pass only right parameter
+	- When define operator inside a class, the object on the left of the operator is the one "calling" the function.
+	== the "left side" is implicit. == t it passed as this to the function, so you only need to pass the parameter in the right
+	E.g: Fixed& operator=(const Fixed& src)
+
+2. Overloading as a Non-Member Function -> need to pass two paramteres
+	Example: Overloading cout << MyClass
+	!-->> std::cout is a std::ostream
+	- You can't go into the official C++ library and add a member function to ostream
+	- So you define a non-Member Function with left << right
+	Template: returntype(of leftside) operator<<(leftside,rightside);
+	--> std::ostream& operater<<(std::ostream& out, MyClass )
 */
 
 
@@ -55,22 +53,42 @@ std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //overload of in
 //If you call getRawBits(), you are asking for the raw, unscaled integer (1280).
 
 /*
-A Copy Constructor is called/is useful
-	- when one object initialiazes another object
-	- when an object is returned by value from a function
-	- object is passed by value to a function 
 
-Typical usecase: When a Deep Copy of the object is requiered
-	- this is necesary if the object has dynamically allocated memry
+Floating Point is Scientific Notation in base 2
+IEEE 754 Standard Single Precision (32 bits)
 
-The Default Copy constructer creates a shallow copy of the original object
-	- so if an objects stores a *p (heap), the shallow copy whill inheret that exact pointer
-	- the *p will point to the same value in memory
-	- if you change the *p value of the original, you change the value within the copy as well
-		Number Ori(10); // *p will be set to hold the value 10
-		Number Cpy = Ori;
-		*(Ori.p) = 20; // then Cpy.pwill change from 8 to 20 aswell
-	- problem occurs when the deconstructor frees the same memory location twice
+
+So all it can do is:	-Store 23 Significant Digits (Mantissa)
+			-decide where the decimal Point in those is
+			-multiply the Mantissa with 2^x (Exponent Box)
+			 (x range from decimal -126 to +127)
+
+This means: Large and Small Numbes can be stored because of the Exponent Box
+But Precision is lost because:
+	- only 23 Significant Binary Digits
+	- Scientific Notation can not Represent Recurring Numbers like 1/3
+Also:
+       -> Two Exponents are reserved for special cases
+	Represent 0 
+	- is impossible if the mantissa is always betwenn 1 and almost 2. 
+	- If the Exponent is 0 (127 in b2), the number is now 
+	  interpreted as subnormal with a leading 0 in the Mantissa
+	  instead of 1. This allows representation of very small
+	  values and zero.
+	-
+	Representing Infinity or Overflow
+	- Is done with Exponent 127 (255 in b2)
+
+Exponent Box (0-255) so with 127 bias; Range should be from -127 to 128.
+But it is actually from -126 to 127 because two Exponents are Reserved
+
+
+Actual Exponent Range for Normalized Numbers 
+				Binary  |  Decimal (-127)		
+Minimum Exponent (00000001):  	   1    |   -126 
+Maximum Exponent (11111110):      254	|    127
+Special Exponent (00000000): 	   0	|   -127
+Infinity/NaN     (11111111): 	   255  |    128
 
 
 
