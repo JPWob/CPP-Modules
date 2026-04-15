@@ -5,7 +5,9 @@ int main( void )
 	Fixed a;
 	Fixed b( a );
 	Fixed c;
+
 	c = b;
+
 	std::cout << a.getRawBits() << std::endl;
 	std::cout << b.getRawBits() << std::endl;
 	std::cout << c.getRawBits() << std::endl;
@@ -14,10 +16,13 @@ int main( void )
 
 /*
 FIXED POINT NUMBERS
+A fixed-point number is a way to represent real (=fractional) numbers 
+using integers with an implied fixed position for the decimal (/binary) point.
+Instead of storing where the decimal point is (like floats do), 
+you decide it in advance and keep it constant (FIXED).
 
 Fixed-Point Value: 5
 Raw Fixed Point Value: 1280 // 
-
 
 Converting a constant integer to fixed-point is just re-scaling the value,
 so that it sits to the left of an imaginary binary point.
@@ -50,4 +55,6 @@ FixedPoint Value = 5 * 2^8 = 1280  (00000101 00000000)
 	== You shift those bits 8 bits to the left.
 	To the CPU, that new binary string is the number 1280:  00000101 00000000
 	! But because you know the last 8 bits are reserved for fractions, you read it as 5.00000000
+
+
 */

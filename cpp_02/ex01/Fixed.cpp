@@ -1,65 +1,86 @@
 #include "Fixed.hpp"
 
-//Int constructor [n * 2^_bits]
-// n = 1 -> 1*256 -> fixp = 256 (00000001 00000000)
-// 1 << 8 = 1 * 256
+//----NEW IN ex01----\\
+//Int constructor
+//Float constructor
+//tofloat()
+//toint()
+//overload of insertion operator
+
+
+/*Precedence:
+0. Function Call (...) and whats happening in the (...)
+1. Type Cast
+2. Multi/Divi 		* /
+4. Sum/Subs			+ -
+3. Shift Operators	<< >>
+*/
+
 Fixed::Fixed(const int n){
 	std::cout << "Int constructor called" << std::endl;
 	(*this)._fixp = n << _bits; 
-};
+};// n = 1 -> 1*256 -> fixp = 256 (00000001 00000000) // but done with bit shifting: 1 << 8 = 1 * 256
 
-//Float Constructor
-//42.42f -> 42.42 * 256 = 10859.52 -> roundf(10859.52) becomes (int)10860
+
+
 Fixed::Fixed(const float f){
 	std::cout << "Float constructor called" << std::endl;
-	this->_fixp = (int)roundf(f * (1 << _bits)); 
-}
+	this->_fixp = static_cast<int>(roundf(f * (1 << _bits))); 
+}//42.42f -> 42.42 * 256 = 10859.52 -> roundf(10859.52) becomes (int)10860
+
 
 float Fixed::toFloat( void ) const{
-	//std::cout << "tofloat memberfunction called" << std::endl;
-	return ( (float)this->getRawBits() / (1 << _bits) );
+	std::cout << "tofloat memberfunction called" << std::endl;
+	return (static_cast<float>(this->_fixp) / (1 << _bits) ); //First Cast to Float, then divide! == Force Float Division
 }
 
 int Fixed::toInt( void ) const{
-	//std::cout << "toInt memberfunction called" << std::endl;
-	return(int(this->getRawBits() >> _bits)); //fixp >> 8 and _fixp / 256 are the same, but >> much faster
+	std::cout << "toInt memberfunction called" << std::endl;
+	return(this->_fixp >> _bits); 
+}//fixp >> 8 and _fixp / 256 are the same, but >> much faster
+
+std::ostream& operator<<(std::ostream& out,const Fixed& fixed){
+	out << fixed.toFloat();
+	return out;
 }
 
+///////// From previous ex00
 
 //Def Cons
+//Cpy Cons
+//Des
+//Copy assignment operator
+//getter & setter
+
 Fixed::Fixed(): _fixp(0){
 	std::cout << "Default Constructor called" << std::endl;
 }
 
-//Des
+Fixed::Fixed(const Fixed& src){
+	std::cout << "Copy Constructor called" << std::endl;
+	this->_fixp = src._fixp;
+}
+
 Fixed::~Fixed(){
 	std::cout << "Destructor called" << std::endl;
 };
 
-//Cpy Cons
-Fixed::Fixed(const Fixed& src){
-	std::cout << "Copy Constructor called" << std::endl;
-	*this = src;
-}
-
-//=operator overloader: this = src
 Fixed& Fixed::operator=(const Fixed& src){
 	std::cout << "Copy assignment operator called" << std::endl;
-	if (this != &src) { // Check addresses
-        this->setRawBits(src.getRawBits());
+	if (this != &src){
+        this->_fixp = src._fixp;
     }
-	return *this; //returns a reference, not a copy
+	return *this;
 }
 
 int Fixed::getRawBits( void ) const
 {
-	//std::cout << "getRawBits member function called" << std::endl;
+	std::cout << "getRawBits member function called" << std::endl;
 	return _fixp;
 }
 
-
 void Fixed::setRawBits( int const raw ){
-	//std::cout << "setRawBits member function called" << std::endl;
+	std::cout << "setRawBits member function called" << std::endl;
 	_fixp = raw;
 }
 
@@ -78,6 +99,6 @@ first use roundf so 0.999... becomes 1.0 and not 0
 
 
 
-//Int constructor [n * 2^_bits] 
+// Int constructor [n * 2^_bits] 
 // n << 8 is the same (but much faster) than: n * pow(2, _bits) 
 // Dont write n*256, because its Hardcoded 

@@ -2,27 +2,26 @@
 #include <cmath>
 
 class Fixed {
-	
 private:
-	int _fixp; 					//fixpoint = the Raw bits = the raw integer value (not 5 but 1280)
+	int 	_fixp; 				
 	static const int _bits = 8; 
 
 public:
 	Fixed();
 	~Fixed();
-	Fixed(const Fixed& src); 		// Copy constructor
-	Fixed(const int n); 			//Const Integer Constructor, converts n to _fixp
-	Fixed(const float f);			//Const float Constructor, converts f to _fixp
+	Fixed(const Fixed& src); 		
+	Fixed& operator=(const Fixed& src);
+	
+	Fixed(const int n); 			//new //Const Integer Constructor, converts n to _fixp
+	Fixed(const float f);			//new //Const float Constructor, converts f to _fixp
+	float	toFloat( void ) const;	//new
+	int 	toInt( void ) const;	//new
 	
 	int		getRawBits( void ) const;
 	void	setRawBits( int const raw );
-	float	toFloat( void ) const;		//new
-	int toInt( void ) const;			//new
-	Fixed& operator=(const Fixed& src);	//new
-
 };
 
-std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //overload of insertion operator
+std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //new // overload of insertion operator
 
 
 /*

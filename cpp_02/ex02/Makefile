@@ -1,6 +1,6 @@
 # Compiler
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CPP = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp Fixed.cpp
@@ -8,17 +8,17 @@ NAME = Now_we_are_talking
 
 # Object files go into .o/ folder
 OBJDIR = .obj
-OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)
 
 # Rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o $(NAME)
+	$(CPP) $(CPPFLAGS) $(OBJS) -o $(NAME)
 
-# Compile each .cpp into .o/ folder
+# Compile each .cpp into .obj/ folder
 $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CPP) $(CPPFLAGS) -c $< -o $@
 
 # Create .o folder if it doesn't exist
 $(OBJDIR):

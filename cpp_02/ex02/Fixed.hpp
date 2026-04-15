@@ -4,20 +4,20 @@
 class Fixed {
 	
 private:
-	int _fixp; 					//fixpoint = the Raw bits = the raw integer value (not 5 but 1280)
+	int _fixp; 					
 	static const int _bits = 8; 
 
 public:
 	Fixed();
 	~Fixed();
-	Fixed(const Fixed& src); 		// Copy constructor
-	Fixed(const int n); 			//Const Integer Constructor, converts n to _fixp
-	Fixed(const float f);			//Const float Constructor, converts f to _fixp
+	Fixed(const Fixed& src); 		
+	Fixed(const int n); 			
+	Fixed(const float f);			
 	
-	int		getRawBits( void ) const;
-	void	setRawBits( int const raw );
-	float	toFloat( void ) const;
-	int 	toInt( void ) const;
+	int		getRawBits(void) const;
+	void	setRawBits(int const raw);
+	float	toFloat(void) const;
+	int 	toInt(void) const;
 
 	Fixed& operator=(const Fixed& src);
 
@@ -38,12 +38,16 @@ public:
 	
 	Fixed& operator++();	//Pre-Increment ++i (Increment first, then use)
 	Fixed& operator--();	//Pre-Decrement --i
-	Fixed operator++(int);	//Post-Increment a = i++; a is 5 | i is 6;
+	Fixed operator++(int);	//Post-Increment (a = i++ : a is 5;  i is 6;)
 	Fixed operator--(int);	//Post increment
 	
-	static Fixed& min(Fixed& first, Fixed& scnd);
+	//Difference: Who can call them and what the caller is allowed to do with the result.
+	//Non const: result and obects can be modified!
+	//Fixed::max(a, b) = 100;	In this case the result (which will be changed to 100) is one of the objects!!!
+	static Fixed& 		min(Fixed& first, Fixed& scnd);
+	static Fixed& 		max(Fixed& first, Fixed& scnd);
+	//Read only
 	static const Fixed& min(const Fixed& first, const Fixed& scnd);
-	static Fixed& max(Fixed& first, Fixed& scnd);
 	static const Fixed& max(const Fixed& first,const Fixed& scnd);
 
 };
@@ -52,6 +56,27 @@ std::ostream& operator<<(std::ostream &out,const Fixed &fixed); //overload of in
 
 
 /*
-Why "Static"?
-Since these are static, they don't belong to a specific instance of the class (like a or b). You call them using the class name itself:
+
+>> If I want to: 
+	// Find the larger of a and b, and set it to 100 == Modifiy Object
+	// Non const Function is needed!
+	Fixed::max(a, b) = 100;		-> Used: static Fixed& min(Fixed& first, Fixed& scnd);
+
+>> If you do:
+
+	const Fixed a(10);
+	const Fixed b(20);
+
+	Fixed& result = Fixed::max(a, b);	// You need a const Version of max
+										// because Const objects are calling it
+									
+	-> 	Needed:
+		static const Fixed& max(const Fixed& first,const Fixed& scnd);
+	-> 	Ilegal:
+		static Fixed& max(const Fixed& first,const Fixed& scnd);
+		-> In case of 
+				Fixed::max(x, y) = 42; 	// This would allow us to change a CONST variable!
+										// ERROR: x and y were supposed to be read-only!
+
+
 */

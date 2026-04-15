@@ -1,41 +1,44 @@
 #include "Fixed.hpp"
 
 //Def Cons
+//Cpy Cons
+//Des
+//Copy assignment operator
+//getter & setter
+
 Fixed::Fixed(): _fixp(0){
 	std::cout << "Default Constructor called" << std::endl;
 }
 
-//Des
+Fixed::Fixed(const Fixed& src){
+	std::cout << "Copy Constructor called" << std::endl;
+	this->_fixp = src._fixp;
+}
+
 Fixed::~Fixed(){
 	std::cout << "Destructor called" << std::endl;
 };
 
-//Cpy Cons
-Fixed::Fixed(const Fixed& src){
-	std::cout << "Copy Constructor called" << std::endl;
-	*this = src;
-}
-
-//=operator overloader: this = src
-Fixed Fixed::operator=(const Fixed& src){
+//Check addresses is good practice for later, when you have to delete existing *ptr memory to assign new one, otherwise deletion of own data possible
+Fixed& Fixed::operator=(const Fixed& src){
 	std::cout << "Copy assignment operator called" << std::endl;
-	if (this != &src) { // Check addresses is good practice for later, when you have to delete existing *ptr memory to assign new one, otherwise deletion of own data possible
-        this->setRawBits(src.getRawBits());
+	if (this != &src){
+        this->_fixp = src._fixp;
     }
-	return *this; //returns a reference, not a copy
+	return *this;
 }
-
 
 int Fixed::getRawBits( void ) const
 {
-	std::cout << "getRawBits member function called" << std::endl;
+	//std::cout << "getRawBits member function called" << std::endl;
 	return _fixp;
 }
 
 void Fixed::setRawBits( int const raw ){
-	std::cout << "setRawBits member function called" << std::endl;
+	//std::cout << "setRawBits member function called" << std::endl;
 	_fixp= raw;
 }
+
 
 
 /*Returning a reference from the Assignment operator=  is the standard practice 
@@ -58,27 +61,6 @@ Also: Efficiency!
 */
 
 
-/*When is it useful to return by value?
-
-
-
-*/
-
 /*
-//Shallow copy of data ptr
-Box::Box(const Box& src) {
-    this->data = src.data; // Both now point to the same memory!
-}
-
-// Deep Copy Constructor
-    Box(const Box& src) {
-        if (src.data != nullptr) {
-            // 1. Allocate new memory
-            this->data = new int; 
-            // 2. Copy the value from src to the new memory
-            *(this->data) = *(src.data); 
-        } 
-			else {
-            this->data = nullptr;
-        }
+A fixed-point number is a way to represent real (fractional) numbers using integers with an implied fixed position for the decimal (binary) point.
 */
