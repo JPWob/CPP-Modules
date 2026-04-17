@@ -1,28 +1,41 @@
+#ifndef CLAPTRAP_HPP
+#define CLAPTRAP_HPP
+
 #include <iostream>
 #include <string>
 
 class ClapTrap{
-protected:
+protected:						//protected, so derived classes can access attributes
     std::string _name;
     int _hit;
     int _ep;
     int _attack;
 
 public:
+	ClapTrap();
     ClapTrap(std::string name);
-    virtual ~ClapTrap(); // Adding 'virtual' here ensures the most derived destructor is called first
-    void attack(const std::string& target);
+	ClapTrap(const ClapTrap& src);
+	ClapTrap& operator=(const ClapTrap& src);
+    virtual ~ClapTrap(); 		//Adding 'virtual' here ensures the most derived destructor is called first
+
+    virtual void attack(const std::string& target);		//Adding 'virtual' here ensures the most derived attack() is called first
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 };
 
-/*
-When ClapTrap attacks, it causes its target to lose <attack damage> hit points.
-When ClapTrap repairs itself, it regains <amount> hit points. 
-Attacking and repairingeach cost 1 energy point. 
-Of course, ClapTrap can’t do anything if it has no hit points or energy points left. 
+#endif
 
-However, since these exercises serve as an introduction, 
-the ClapTrap instances should not interact directly with one another, 
-and the parameters will not refer to another instance of ClapTrap.
+/* Virtual in Functions 
+// virtual void attack() or Destructors
+>>
+This tells the compiler: Use the most derived Version of this function:
+"If a child class has its own version of this function, use the child's 
+version—even if I'm looking at the object through a parent's pointer."
+
+What it fixes: 
+>>>It ensures that if you have a 
+	ClapTrap* ptr = new ScavTrap(); 
+	calling ptr->attack() runs the ScavTrap version, not the base ClapTrap version.
+>>>It ensures the most derived Destructor is called first
+
 */

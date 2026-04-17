@@ -1,22 +1,43 @@
 #include "DiamondTrap.hpp"
 
-void DiamondTrap::whoAmI(){
-    std::cout << "I am a pure Diamond!" << std::endl;
+
+
+//Def Constructor
+DiamondTrap::DiamondTrap() :
+	ClapTrap("default_clap_name"),
+	ScavTrap("default"),			//Call to Claptrap(name) ignored, rest of instructions in Scav Constructor executed
+	FragTrap("default"),			//Call to Claptrap(name) ignored, rest of instructions in Frag Constructor executed
+	_name("default")
+{
+	//Parent constructors are finished, now we set our values
+	//this->_name = "default";
+	this->_hit = FragTrap::_hit;    // Take whatever FragTrap uses for HP
+    this->_ep = ScavTrap::_ep;      // Take whatever ScavTrap uses for EP
+    this->_attack = FragTrap::_attack; // Take whatever FragTrap uses for AD
+	std::cout << "DiamondTrap " << _name << " constructed." << std::endl;
 }
+
+void DiamondTrap::whoAmI(){
+    std::cout << "I am a pure Diamond! My Name is \"" << _name << "\"" 
+	<< "But my Parents name is \"" << FragTrap::_name << "\"" << std::endl;
+}
+
+
 DiamondTrap::DiamondTrap(std::string name) :
-    ClapTrap(name + "_clap_name"),
-    FragTrap(name), 
-    ScavTrap(name),
-    _name(name)
+    ClapTrap(name + "_clap_name"), 		//only Diamond is allowed to Construct ClapTrap
+    ScavTrap(name), 					//this would call Claptrap(name)-> ignored!
+    FragTrap(name), 					//this would call Claptrap(name)-> ignored!
+    _name(name) 						//ok
 {
     this->_hit = FragTrap::_hit;
     this->_ep = ScavTrap::_ep;
     this->_attack = FragTrap::_attack;
-    std::cout << "DiamondTrap " << _name << " constructed." << std::endl;
+    std::cout << "DiamondTrap \"" << _name << "\" constructed." << std::endl;
 }
 
+
 DiamondTrap::~DiamondTrap(){
-    std::cout << "DiamondTrap " << _name << " destructed." << std::endl;
+    std::cout << "DiamondTrap \"" << _name << "\" destructed." << std::endl;
 }
 
 /*
@@ -56,4 +77,51 @@ is ignored, the other logic inside their constructors
 You need them to initialize so your DiamondTrap gets 
 its base stats before you overwrite them with the 
 specific Diamond requirements.
+*/
+
+
+/*Inheritance
+
+Since ScavTrap and FragTrap are sharing the same ClapTrap, C++ doesn't want them fighting over how to initialize it.
+>>> The Rule: DiamondTrap is the only one allowed to call the ClapTrap constructor directly.
+>>> Calls to ClapTrap Constructor from Scav/Frag are ignored, so the ClapTrap::_name variable remains unchanged
+
+
+*/
+
+/* What is stored in memory, when the Default Diamond Constructor is finished?
+>>>
+When the DiamondTrap constructor is finished, all three classes (ClapTrap, ScavTrap, FragTrap) 
+are actually looking at the exact same memory addresses for their attributes.
+
+*/
+
+/*
+/----------The Conflict (The Overwriting)-------\
+>>>
+Because you declared ScavTrap and FragTrap as virtual public ClapTrap, 
+the computer creates only one ClapTrap sub-object in memory for your DiamondTrap!
+>>>
+When you call DiamondTrap(), C++ follows the construction order. 
+Here is what happens to that shared "whiteboard" (the HP, EP, and AD variables):
+
+Step 1: ClapTrap Constructor runs.
+	It writes on the whiteboard: HP: 10, EP: 10, AD: 0.
+
+Step 2: ScavTrap Constructor runs.
+	It looks at the whiteboard and says "I need to change these!"
+	It erases the old numbers and writes: HP: 100, EP: 50, AD: 20.
+
+Step 3: FragTrap Constructor runs.
+	It looks at the same whiteboard and says "No, I need to change these!"
+	It erases the ScavTrap numbers and writes: HP: 100, EP: 100, AD: 30.
+
+By the time it gets to your DiamondTrap body, the "whiteboard" says:
+HP: 100, EP: 100, AD: 30 (The FragTrap values).
+*/
+
+/*
+
+If the variables had unique names (like _diamondName and _clapName), 
+you would not need the ClapTrap:: prefix. You could simply use the variable names directly.
 */

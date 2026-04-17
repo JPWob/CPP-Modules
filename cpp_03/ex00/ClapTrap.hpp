@@ -9,8 +9,12 @@ private:
     int _attack;
 
 public:
-    ClapTrap(std::string name);
+	ClapTrap();
     ~ClapTrap();
+	ClapTrap(const ClapTrap& src);
+	ClapTrap& operator=(const ClapTrap& src);
+    ClapTrap(std::string name);
+
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
