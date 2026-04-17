@@ -9,9 +9,13 @@ protected:
     std::string _type;
 public:
 	Animal();
+	Animal(const Animal& src);
+	Animal& operator=(const Animal& src);
+	Animal(std::string type);
 	virtual ~Animal();
-    virtual void makeSound();
-    std::string& getType(); 
+	
+	virtual void makeSound();
+	std::string& getType(); 
 };
 
 #endif

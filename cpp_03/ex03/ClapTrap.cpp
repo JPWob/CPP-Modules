@@ -18,7 +18,7 @@ void ClapTrap::beRepaired(unsigned int amount){
 	    _hit += amount;
 	    std::cout   << "ClapTrap \"" << _name 
 		<< "\" uses 1 EP to repair itself by " << amount
-		<< " HP. Now " << _hit << " HP left." << std::endl;
+		<< " HP. Now " << _hit << " HP and " << _ep << " EP left." << std::endl;
 	}
 	else{
 		std::cout   << "ClapTrap \"" << _name 

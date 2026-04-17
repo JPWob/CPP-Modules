@@ -1,6 +1,22 @@
 #include "DiamondTrap.hpp"
 
 
+void DiamondTrap::whoAmI(){
+	std::cout << "I am a pure Diamond! My Name is \"" << _name << "\"." 
+	<< " But my Parents name is \"" << FragTrap::_name << "\"" << std::endl;
+}
+
+DiamondTrap& DiamondTrap::operator=(const DiamondTrap& src)
+{	
+	std::cout 	<< "DiamondTrap assignment operator on \"" << _name << "\" called." << std::endl;
+	if(this != &src)
+	{
+		ClapTrap::operator=(src);
+		this->_name = src._name; 
+	}
+	return *this;
+}
+
 
 //Def Constructor
 DiamondTrap::DiamondTrap() :
@@ -10,18 +26,21 @@ DiamondTrap::DiamondTrap() :
 	_name("default")
 {
 	//Parent constructors are finished, now we set our values
-	//this->_name = "default";
-	this->_hit = FragTrap::_hit;    // Take whatever FragTrap uses for HP
-    this->_ep = ScavTrap::_ep;      // Take whatever ScavTrap uses for EP
-    this->_attack = FragTrap::_attack; // Take whatever FragTrap uses for AD
+	this->_hit = 100;   
+    this->_ep = 50;
+    this->_attack = 30;
 	std::cout << "DiamondTrap " << _name << " constructed." << std::endl;
 }
 
-void DiamondTrap::whoAmI(){
-    std::cout << "I am a pure Diamond! My Name is \"" << _name << "\"" 
-	<< "But my Parents name is \"" << FragTrap::_name << "\"" << std::endl;
+DiamondTrap::DiamondTrap(const DiamondTrap& src) :
+	ClapTrap(src), 
+    ScavTrap(src),	//good practice
+    FragTrap(src)	//good practice
+{
+	std::cout << "DiamondTrap Copy Constructor called. Taking values from \"" << src._name <<  "\"." << std::endl;
+	this->_name = src._name;
+	*this = src;
 }
-
 
 DiamondTrap::DiamondTrap(std::string name) :
     ClapTrap(name + "_clap_name"), 		//only Diamond is allowed to Construct ClapTrap
@@ -29,9 +48,9 @@ DiamondTrap::DiamondTrap(std::string name) :
     FragTrap(name), 					//this would call Claptrap(name)-> ignored!
     _name(name) 						//ok
 {
-    this->_hit = FragTrap::_hit;
-    this->_ep = ScavTrap::_ep;
-    this->_attack = FragTrap::_attack;
+	this->_hit = 100;   
+    this->_ep = 50;
+    this->_attack = 30;
     std::cout << "DiamondTrap \"" << _name << "\" constructed." << std::endl;
 }
 
@@ -39,6 +58,9 @@ DiamondTrap::DiamondTrap(std::string name) :
 DiamondTrap::~DiamondTrap(){
     std::cout << "DiamondTrap \"" << _name << "\" destructed." << std::endl;
 }
+
+
+
 
 /*
 Since FragTrap and ScavTrap both inherit from ClapTrap, 
