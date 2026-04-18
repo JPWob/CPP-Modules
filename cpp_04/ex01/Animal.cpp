@@ -1,8 +1,9 @@
 #include "Animal.hpp"
 
-std::string& Animal::getType(){
+const std::string& Animal::getType() const{
     return (_type);
 }
+
 
 void Animal::makeSound(){
     std::cout << "\"generic noise\"" << std::endl;

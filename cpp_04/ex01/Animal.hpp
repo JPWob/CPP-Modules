@@ -15,7 +15,7 @@ public:
 	virtual ~Animal();
 	
 	virtual void makeSound(); //look at the most derived version of this function
-	std::string& getType(); 
+	const std::string& getType() const;
 };
 
 #endif

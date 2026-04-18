@@ -12,9 +12,7 @@ Brain& Brain::operator=(const Brain& src) {
 
 Brain::Brain(const Brain& src) {
     std::cout << "Brain Copy Constructor called" << std::endl;
-    for (int i = 0; i < 100; i++) {
-        this->ideas[i] = src.ideas[i];
-    }
+    *this = src;
 }
 
 Brain::Brain(){
