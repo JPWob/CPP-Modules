@@ -15,7 +15,6 @@ int main(){
     one.takeDamage(1);
     one.beRepaired(10);
 
-	
 	std::cout << std::endl;
 	std::cout << "Test Three (Cpy Assignemnt Operator)" << std::endl;
 	ScavTrap three;

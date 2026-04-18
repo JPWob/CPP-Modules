@@ -5,6 +5,7 @@ protected:
 
 public:
     WrongCat();
+	WrongCat(std::string type);
 	~WrongCat();
 
     void makeSound();

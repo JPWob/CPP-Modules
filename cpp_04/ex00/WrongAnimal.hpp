@@ -9,8 +9,10 @@ protected:
     std::string _type;
 public:
 	WrongAnimal();
+	WrongAnimal(std::string _type);
 	~WrongAnimal();
-    void makeSound();
+    
+	void makeSound();	//not virtual -> Wrong
     std::string& getType(); 
 };
 

@@ -14,12 +14,16 @@ Cat::Cat(const Cat& src) : Animal(src){
 
 }
 
-Cat::Cat() : Animal("Cat"){//equivalent to Cat::Cat() : Animal()  
+Cat::Cat(std::string type) : Animal(type){
+	std::cout << _type << " in CatClass constructed. (Animal should be constructed first)."<<std::endl;
+}
+
+Cat::Cat() : Animal(){
     std::cout << _type << " in CatClass constructed. (Animal should be constructed first)."<<std::endl;
 }
 
 Cat::~Cat(){
-    std::cout << _type << " (Catclass) destructed. destructed. (Animal needs to be destructed afterwards)."<<std::endl;
+    std::cout << _type << " (Catclass) destructed. (Animal needs to be destructed afterwards)."<<std::endl;
 }
 
 void Cat::makeSound(){

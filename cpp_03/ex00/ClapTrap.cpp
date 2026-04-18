@@ -60,10 +60,10 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& src){
 	std::cout << "ClapTrap Copy Assignment operator for \"" << _name << "\" called."
 	<< " Making Copy from src \"" << src._name << "\""  << std::endl;
 	if(this != &src){
-		this->_name = src._name;
-		this->_ep = src._ep;
-		this->_hit = src._hit;
-		this->_attack = src._attack;
+		_name = src._name;
+		_ep = src._ep;
+		_hit = src._hit;
+		_attack = src._attack;
 	}
 	return(*this);
 }
@@ -80,4 +80,3 @@ ClapTrap::ClapTrap(std::string name) : _name(name), _hit(10), _ep(10), _attack(0
 ClapTrap::~ClapTrap(){
     std::cout << "ClapTrap Destructor for \"" << _name << "\" called" << std::endl;
 }
-

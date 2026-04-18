@@ -10,6 +10,8 @@ protected:
 public:
     Brain();
     ~Brain();
+	Brain(const Brain& src);
+	Brain& operator=(const Brain& src);
 
     void setIdea(int i, const std::string& idea);
     const std::string& getIdea(int i) const; //returns a const referemnce

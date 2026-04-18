@@ -25,6 +25,8 @@ int main(){
 	two.attack("Bernd");
 	std::cout << std::endl;
 
+	two = zero;
+	two.attack("Bernd");
 
 
     return (0);

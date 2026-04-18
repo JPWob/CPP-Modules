@@ -1,7 +1,10 @@
 #include "WrongCat.hpp"
 
-WrongCat::WrongCat(){
-    _type = "WrongCat";
+WrongCat::WrongCat(std::string type) : WrongAnimal(type){
+    std::cout << _type << " in WrongCatClass constructed"<<std::endl;
+}
+
+WrongCat::WrongCat() : WrongAnimal(){
     std::cout << _type << " in WrongCatClass constructed"<<std::endl;
 }
 

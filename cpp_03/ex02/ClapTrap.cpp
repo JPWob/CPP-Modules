@@ -35,7 +35,7 @@ void ClapTrap::takeDamage(unsigned int amount){
 				<< " damage: " << _hit << " HP left." << std::endl;
 }
 
-ClapTrap::ClapTrap(const ClapTrap& src){
+ClapTrap::ClapTrap(const ClapTrap& src) {
 	std::cout << "ClapTrap Copy Constructor from src \"" << src._name << "\" called" << std::endl;
 	this->_name = src._name;
 	this->_ep = src._ep;

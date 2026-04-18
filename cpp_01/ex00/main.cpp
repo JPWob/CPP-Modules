@@ -21,7 +21,7 @@ void StackZombie()
 void HeapZombie()
 {
 	std::string name;
-	Zombie** 	horde = new Zombie*[10]; //allocating array of 10 pointers, no zombies exist yet
+	Zombie* horde[10]; //allocating array of 10 pointers, no zombies exist yet
 	
 	std::cout << "Nice. Name up to 10 Zombies as you like.\nEnter DONE to announce all Zombies\n";
 	int i = 0;

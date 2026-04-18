@@ -1,5 +1,3 @@
-#ifndef CLAPTRAP_HPP
-#define CLAPTRAP_HPP
 
 #include <iostream>
 #include <string>
@@ -23,7 +21,7 @@ public:
     void beRepaired(unsigned int amount);
 };
 
-#endif
+
 
 /*
 When ClapTrap attacks, it causes its target to lose <attack damage> hit points.

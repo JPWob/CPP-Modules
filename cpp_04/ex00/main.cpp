@@ -42,14 +42,14 @@ int main(){
     std::cout << "__Testing Wrong__" << std::endl;
     WrongAnimal **wrong = new WrongAnimal*[2];
     std::cout << std::endl;
-    wrong[0] = new WrongAnimal;
-    wrong[1] = new WrongCat;
+    wrong[0] = new WrongAnimal("Animal");
+    wrong[1] = new WrongCat("Cat");
     std::cout << std::endl;
 
     std::cout << "__Wrong Type and Sound:__" << std::endl;
-    std::cout << wrong[0]->getType() << " makes ";
+    std::cout << wrong[0]->getType() << " of WrongAnimal Class makes ";
     wrong[0]->makeSound();
-    std::cout << wrong[1]->getType() << " makes ";
+    std::cout << wrong[1]->getType() << " of WrongCatClass makes ";
     wrong[1]->makeSound();
     std::cout << std::endl;
 
