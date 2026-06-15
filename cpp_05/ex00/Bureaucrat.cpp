@@ -8,13 +8,25 @@ int	Bureaucrat::getGrade() const{
     return(this->_grade);
 };
 
-int Bureaucrat::GradeTooHighException(){
+void Bureaucrat::incrementGrade(){
+    std::cout << "Increment Grade" << std::endl;
+    this->_grade++;
+};
+void Bureaucrat::decrementGrade(){
+    std::cout << "Decrement Grade" << std::endl;
+    this->_grade--;
+};
+
+//define the what method
+const char *Bureaucrat::GradeTooHighException::what() const throw(){
+    return("Bureaucrat Error: Grade is too high! Must be >= 1");
 
 };
 
-int Bureaucrat::GradeTooLowException(){
-
+const char *Bureaucrat::GradeTooLowException::what() const throw(){
+    return ("Bureaucrat Error: Grade is too low! (Must be <= 150)");
 };
+
 
 Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name){
     std::cout << "Bureaucrat Constructor called" << std::endl;
@@ -49,8 +61,6 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
     std::cout << "Bureaucrat Copy assignment called" << std::endl;
     return *this;
 };
-
-
 
 Bureaucrat::~Bureaucrat(){
     std::cout << "Bureaucrat destructed" << std::endl;
