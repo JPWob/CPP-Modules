@@ -10,11 +10,11 @@ int	Bureaucrat::getGrade() const{
 
 void Bureaucrat::incrementGrade(){
     std::cout << "Increment Grade" << std::endl;
-    this->_grade++;
+    this->_grade--;
 };
 void Bureaucrat::decrementGrade(){
     std::cout << "Decrement Grade" << std::endl;
-    this->_grade--;
+    this->_grade++;
 };
 
 //define the what method
@@ -64,4 +64,19 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
 
 Bureaucrat::~Bureaucrat(){
     std::cout << "Bureaucrat destructed" << std::endl;
+};
+
+
+
+/*Print operator
+When main.cpp executes the line 	std::cout << intern;, 
+the compiler translates it mathematically 
+into a function call: 				operator<<(std::cout, intern);.
+
+
+*/
+
+std::ostream& operator<<(std::ostream& o, const Bureaucrat& src){
+	o << src.getName() << ", bureaucrat grade " << src.getGrade() << "." << std::endl;
+	return o;
 };

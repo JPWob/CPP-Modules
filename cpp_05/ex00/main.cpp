@@ -23,9 +23,8 @@ int main (){
     }
 
     Bureaucrat Friedrich("Friedrich", 60);
-    std::cout << Friedrich.getName() << std::endl;
-    std::cout << Friedrich.getGrade() << std::endl;
+    std::cout << Friedrich;
     Friedrich.incrementGrade();
     Friedrich.decrementGrade();
-    std::cout << Friedrich.getGrade() << std::endl;
+    std::cout << Friedrich;
 }

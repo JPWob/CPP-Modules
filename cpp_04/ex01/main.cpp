@@ -1,6 +1,8 @@
 #include "Dog.hpp"
 #include "Cat.hpp"
 
+
+
 int main(){
 
 	Dog dogA;
@@ -77,7 +79,7 @@ int main(){
     std::cout << "Original Cat  Idea[0]\t:" << &cat_ori.getBrain()->getIdea(0) << cat_ori.getBrain()->getIdea(0) << std::endl;
     std::cout << "Copy Cat Idea[0]\t:" << &cat_cpy.getBrain()->getIdea(0) << cat_cpy.getBrain()->getIdea(0) << std::endl;
     std::cout << std::endl;
-    //delete cat_cpy.getBrain();
-    //delete cat_ori.getBrain();
+    // delete cat_cpy.getBrain();  //should crash
+    // delete cat_ori.getBrain();
 
 }
