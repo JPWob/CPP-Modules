@@ -3,7 +3,7 @@ CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp Bureaucrat.cpp AForm.cpp PresedentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp
+SRCS = main.cpp Bureaucrat.cpp AForm.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp
 NAME = AForm
 
 # Object files go into .o/ folder
