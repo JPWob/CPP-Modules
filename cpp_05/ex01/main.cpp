@@ -3,7 +3,7 @@
 
 int main(){
 
-	Bureaucrat b("b", 100);
+	Bureaucrat b("b", 50);
 
 	Form f("f", 50, 80);
 	try{

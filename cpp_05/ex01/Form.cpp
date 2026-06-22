@@ -16,9 +16,12 @@ Form& Form::operator=(const Form& src){
 }
 								
 void Form::beSigned(const Bureaucrat& b){
-	if(_gradeToSign < b.getGrade())
+	if(_gradeToSign < b.getGrade()){
+		std::cout << b.getName() << " couldnt sign " << this->getName() << " because: ";
 		throw Form::GradeTooLowException();
+	}
 	_isSigned = true;
+	std::cout<< b.getName() << " sucessfully signed " << this->getName() << std::endl;
 }
 
 
