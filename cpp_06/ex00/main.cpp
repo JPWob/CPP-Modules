@@ -4,6 +4,11 @@ int main(){
     std::string str = "t";
 
     ScalarConverter::convert(str);
+    ScalarConverter::convert("42.1234567890123");
+    ScalarConverter::convert("3.33f");
+    ScalarConverter::convert("5.7f864f");
+    ScalarConverter::convert("   2147483647");
+    ScalarConverter::convert("   2147483648");
 }
 
 

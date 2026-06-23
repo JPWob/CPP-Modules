@@ -21,7 +21,6 @@ bool charliteral(const std::string& str){
     // By default, C++ streams will drop the trailing zeros entirely: 
     // e.g. static_cast<float>('a') evaluates to 97 not 97.0
     // so do:
-        std::cout << std::fixed << std::setprecision(1); 
 
         std::cout << "float: " << static_cast<float>(c) << "f\n";
         std::cout << "double: " << static_cast<double>(c) << "\n";
@@ -40,22 +39,17 @@ std::string trimmedStr(const std::string& str){
     }
     return str;
 }
-
-bool checkCleanInput(std::stringstream& ss,  double doubleVal){
-    double doubleVal;
+                                                
+bool checkCleanInput(std::stringstream& ss,  double& doubleVal){ //pass double as reference!
     char leftover;
-    
-    bool clean;
 
-    if (!(ss >> doubleVal) || (ss >> leftover)) {
-    std::cout << "char: impossible\n"
-                << "int: impossible\n"
-                << "float: impossible\n"
-                << "double: impossible\n";
-    return false;
+    if ((ss >> doubleVal) && !(ss >> leftover)) {
+        return true; // clean string
     }
-
+    std::cout << "All impossible" << std::endl;
+    return false; // Found garbage text or extraction failed
 }
+
 
 void printAllConversions(double doubleVal){
 
@@ -69,9 +63,15 @@ void printAllConversions(double doubleVal){
         std::cout << "'" << static_cast<char>(doubleVal) << "'\n";
     }
 
-    std::cout << "int: "    << static_cast<int>(doubleVal)  << "\n";
+    std::cout << "int: ";
+    if(doubleVal > INT_MAX || doubleVal < INT_MIN){
+        std::cout << "impossible" << std::endl;
+    }else {
+        std::cout << static_cast<int>(doubleVal)  << std::endl;
+    }
+           
     std::cout << "float: "  << static_cast<float>(doubleVal) << "f\n";
-    std::cout << "double: " << static_cast<double>(doubleVal) << "\n";
+    std::cout << "double: " << doubleVal << std::endl;
 }
 
 void ScalarConverter::convert(const std::string& str){
@@ -82,56 +82,17 @@ void ScalarConverter::convert(const std::string& str){
     if(charliteral(str)){
         return;
     }
+    std::cout << std::fixed << std::setprecision(1); 
     std::string trimStr = trimmedStr(str);
-
     std::stringstream ss(trimStr);
-    double doubleVal
-    if(!checkCleanInput(ss, doubleVal);
-    // If the stream fails to read a number, OR finds leftover garbage text after reading number
+    double doubleVal = 0.0;
+
+    if(!checkCleanInput(ss, doubleVal)){
+        return;
+    }
     
     printAllConversions(doubleVal);
 }
-
-// void convert(const std::string& str) {
-//     // Phase 1: Handle Pseudo-literals immediately (Early Exit)
-//     if (handlePseudoLiterals(str)) {
-//         return; 
-//     }
-
-//     // Phase 2: Check for a single Character literal (e.g., 'a')
-//     // If the string length is 1 and it's not a digit, it's a char literal!
-//     if (str.length() == 1 && !std::isdigit(str[0])) {
-//         processAsChar(str[0]);
-//         return;
-//     }
-
-//     // Phase 3: Clean up float suffixes and identify the core numeric type
-//     std::string cleanStr = str;
-//     bool isFloatType = false;
-
-//     if (cleanStr.length() > 1 && cleanStr[cleanStr.length() - 1] == 'f') {
-//         isFloatType = true;
-//         cleanStr = cleanStr.substr(0, cleanStr.length() - 1); // Strip the 'f'
-//     }
-
-//     // Phase 4: Stream Conversion & Validation
-//     std::stringstream ss(cleanStr);
-//     double doubleVal;
-//     char leftover;
-
-//     // If the stream fails to read a number, OR finds leftover garbage text
-//     if (!(ss >> doubleVal) || (ss >> leftover)) {
-//         std::cout << "char: impossible\n"
-//                   << "int: impossible\n"
-//                   << "float: impossible\n"
-//                   << "double: impossible\n";
-//         return;
-//     }
-
-//     // Phase 5: Success! Cast and Print everything
-//     // Since we parsed it into a double, we can safely dispatch the prints
-//     printAllConversions(doubleVal, isFloatType);
-// }
 
 
 
