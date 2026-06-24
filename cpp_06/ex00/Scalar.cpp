@@ -1,29 +1,89 @@
 #include "Scalar.hpp"
 
-bool PseudoLiterals(const std::string& str) {
-    if (str == "-inff" || str == "+inff" || str == "nanf") {
-        std::cout << "It's a float pseudo-literal.\n";
-        return true;
+void printAllConversions(char c, int i, const float& f, const double& d, bool isImpossible){
+
+    std::cout << std::fixed << std::setprecision(1);
+
+    std::cout << "char: ";
+    if (isImpossible || std::isnan(d) || std::isinf(d) || i < 0 || i > 127) {
+        std::cout << "impossible\n";
+    } else if (!std::isprint(c)) {
+        std::cout << "Non displayable\n";
+    } else {
+        std::cout << "'" << c << "'\n";
     }
-    if (str == "-inf" || str == "+inf" || str == "nan") {
-        std::cout << "It's a double pseudo-literal.\n";
+
+    std::cout << "int: ";
+    if (isImpossible || std::isnan(d) || std::isinf(d) || d > INT_MAX || d < INT_MIN){
+        std::cout << "impossible\n";
+    } else {
+        std::cout << i << "\n";
+    }
+
+    std::cout << "float: ";
+    if (isImpossible) {
+        std::cout << "impossible\n";
+    } else if (std::isnan(f)) {
+        std::cout << "nanf\n";
+    } else if (std::isinf(f)) {
+        std::cout << (f < 0 ? "-inff\n" : "+inff\n");
+    } else {
+        std::cout << f << "f\n";
+    }
+
+    std::cout << "double: ";
+    if (isImpossible) {
+        std::cout << "impossible\n";
+    } else if (std::isnan(d)) {
+        std::cout << "nan\n";
+    } else if (std::isinf(d)) {
+        std::cout << (d < 0 ? "-inf\n" : "+inf\n");
+    } else {
+        std::cout << d << "\n";
+    }
+
+}
+
+
+void printPseudo(const std::string& str){
+
+    bool isFloatPseudo = (str == "nanf" || str == "+inff" || str == "-inff");
+    
+    if (isFloatPseudo) {
+        float  f = std::stof(str);
+        char c   = static_cast<char>(f);
+        int i    = static_cast<int>(f);
+        double d = static_cast<double>(f);
+        printAllConversions(c, i, f, d, false);
+    } 
+    else {
+        double d = std::stod(str); //beause a float or a double variable in C++ only stores raw numerical data, so no f for floats
+        char c   = static_cast<char>(d);
+        int i    = static_cast<int>(d);
+        float f = static_cast<double>(d);
+        printAllConversions(c, i, f, d, false);
+    }
+
+}
+
+bool isPseudo(const std::string& str) {
+    if (str == "-inff" || str == "+inff" || str == "nanf" ||
+            str == "-inf" || str == "+inf" || str == "nan"){
+        printPseudo(str);
         return true;
     }
     return false;
 }
 
+
 bool charliteral(const std::string& str){
 
     if(str.length() == 1 && !std::isdigit(str[0])){
         char c = str[0];
-        std::cout << "char: '" << c << "'\n";
-        std::cout << "int: " << static_cast<int>(c) << "\n";
-    // By default, C++ streams will drop the trailing zeros entirely: 
-    // e.g. static_cast<float>('a') evaluates to 97 not 97.0
-    // so do:
-
-        std::cout << "float: " << static_cast<float>(c) << "f\n";
-        std::cout << "double: " << static_cast<double>(c) << "\n";
+        int i = static_cast<int>(c);
+        float f = static_cast<float>(c);
+        double d = static_cast<double>(c);
+        printAllConversions(c, i, f, d, false);
         return (true);
     }
     return false;
@@ -46,52 +106,29 @@ bool checkCleanInput(std::stringstream& ss,  double& doubleVal){ //pass double a
     if ((ss >> doubleVal) && !(ss >> leftover)) {
         return true; // clean string
     }
-    std::cout << "All impossible" << std::endl;
+    printAllConversions('\0',0 ,0.0f,0.0, true);
     return false; // Found garbage text or extraction failed
 }
 
 
-void printAllConversions(double doubleVal){
-
-    // 1. Handle Char safely
-    std::cout << "char: ";
-    if (doubleVal < 0 || doubleVal > 127) {
-        std::cout << "impossible\n";
-    } else if (!std::isprint(static_cast<int>(doubleVal))) {
-        std::cout << "Non displayable\n";
-    } else {
-        std::cout << "'" << static_cast<char>(doubleVal) << "'\n";
-    }
-
-    std::cout << "int: ";
-    if(doubleVal > INT_MAX || doubleVal < INT_MIN){
-        std::cout << "impossible" << std::endl;
-    }else {
-        std::cout << static_cast<int>(doubleVal)  << std::endl;
-    }
-           
-    std::cout << "float: "  << static_cast<float>(doubleVal) << "f\n";
-    std::cout << "double: " << doubleVal << std::endl;
-}
 
 void ScalarConverter::convert(const std::string& str){
 
-    if (PseudoLiterals(str)) {
-        return; 
+    std::cout << std::fixed << std::setprecision(1); 
+    if (isPseudo(str)) {
+        return;
     }
     if(charliteral(str)){
         return;
     }
-    std::cout << std::fixed << std::setprecision(1); 
-    std::string trimStr = trimmedStr(str);
+    std::string trimStr = trimmedStr(str); ////While std::stod and std::stof are great at finding a number inside a string, they suffer from a major flaw: they ignore trailing garbage text. So manual check is necesary
     std::stringstream ss(trimStr);
     double doubleVal = 0.0;
 
     if(!checkCleanInput(ss, doubleVal)){
         return;
     }
-    
-    printAllConversions(doubleVal);
+    printAllConversions(doubleVal, doubleVal, doubleVal ,doubleVal, false);
 }
 
 

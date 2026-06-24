@@ -1,14 +1,26 @@
 #include "Scalar.hpp"
+#include <limits>
 
-int main(){
-    std::string str = "t";
+int main(int argc, char* argv[]) {
 
-    ScalarConverter::convert(str);
-    ScalarConverter::convert("42.1234567890123");
-    ScalarConverter::convert("3.33f");
-    ScalarConverter::convert("5.7f864f");
-    ScalarConverter::convert("   2147483647");
-    ScalarConverter::convert("   2147483648");
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <argument>" << std::endl;
+        return 1; // Return an error code
+    }
+    ScalarConverter::convert(argv[1]);
+    // ScalarConverter::convert("42.1234567890123");
+    // ScalarConverter::convert("3.33f");
+    // ScalarConverter::convert("5.7f864f");
+    // ScalarConverter::convert("   2147483647");
+    // ScalarConverter::convert("   2147483648");
+
+    // float f = -std::numeric_limits<float>::infinity();
+    // std::cout << f << std::endl;
+    // std::cout << static_cast<double>(f) << std::endl;
+    //float ff = +std::numeric_limits<float>::infinity();
+   // double d = -std::numeric_limits<double>::infinity();
+   // float dd = +std::numeric_limits<double>::infinity();
+   
 }
 
 

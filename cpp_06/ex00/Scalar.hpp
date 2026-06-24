@@ -3,6 +3,8 @@
 #include <sstream>
 #include <iomanip> // For std::fixed and std::setprecision
 #include <limits>
+#include <cmath>
+
 
 class ScalarConverter{
     public:
