@@ -17,13 +17,14 @@ int main(){
 
 	std::cout << "--- Generating Random Object ---" << std::endl;
 	Base* randObject = generate();
-	Base* BaseA = new A(42);
-	Base* BaseB = new B("abc");
-	Base* BaseC = new C('f');
+	
+    std::cout << "--- Identify Random Object via ptr ---" << std::endl;
+    identify(randObject);
 
+    std::cout << "--- Identify Random Object via reference ---" << std::endl;
+    identify(*randObject);
 
-
-
+    delete randObject;
 }
 
 
