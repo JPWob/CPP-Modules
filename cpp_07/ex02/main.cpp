@@ -1,8 +1,11 @@
 #include <iostream>
-#include <Array.hpp>
+#include "Array.hpp"
 
-#define MAX_VAL 750
-int main(int, char**)
+#define MAX_VAL 4
+
+
+
+int main()
 {
     Array<int> numbers(MAX_VAL);
     int* mirror = new int[MAX_VAL];
@@ -13,10 +16,20 @@ int main(int, char**)
         numbers[i] = value;
         mirror[i] = value;
     }
+    for(int i = 0; i < MAX_VAL; i++){
+        std::cout << "Numbers: " << numbers[i];
+        std::cout << " Mirror: " << mirror[i];
+        std::cout << std::endl;
+    }
     //SCOPE
     {
         Array<int> tmp = numbers;
         Array<int> test(tmp);
+        for(int i = 0; i < MAX_VAL; i++){
+        std::cout << "tmp: " << tmp[i];
+        std::cout << " test: " << test[i];
+        std::cout << std::endl;
+    }
     }
 
     for (int i = 0; i < MAX_VAL; i++)
@@ -24,6 +37,7 @@ int main(int, char**)
         if (mirror[i] != numbers[i])
         {
             std::cerr << "didn't save the same value!!" << std::endl;
+            delete [] mirror;
             return 1;
         }
     }
@@ -33,10 +47,12 @@ int main(int, char**)
     }
     catch(const std::exception& e)
     {
+        std::cout << "numbers[-2] = 0; ";
         std::cerr << e.what() << '\n';
     }
     try
     {
+        std::cout << "numbers[MAX_VAL] = 0; ";
         numbers[MAX_VAL] = 0;
     }
     catch(const std::exception& e)
@@ -48,6 +64,19 @@ int main(int, char**)
     {
         numbers[i] = rand();
     }
-    delete [] mirror;//
+    for(int i = 0; i < MAX_VAL; i++){
+        std::cout << "NewNumbers: " << numbers[i];
+        std::cout << std::endl;
+    }
+    delete [] mirror;// heap allocated
     return 0;
 }
+
+
+
+// int main(){
+//     int *a = new int();
+//     std::cout << *a << std::endl; // Displays: 0
+
+
+// }

@@ -3,8 +3,8 @@ CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp Base.cpp functions.cpp
-NAME = Base
+SRCS = main.cpp
+NAME = templates
 
 # Object files go into .o/ folder
 OBJDIR = .obj
