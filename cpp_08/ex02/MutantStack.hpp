@@ -53,8 +53,18 @@ public:
     const_reverse_iterator rend() const{
         return this->c.rend();
     }
-
-    //Orthodox canonical Form missing!
+    //Default
+    MutantStack() : std::stack<T>(){};
+    //MutantStack<int>
+    MutantStack(const typename std::stack<T>::container_type& container) : std::stack<T>(container){};
+    MutantStack(const MutantStack& src);
+    MutantStack& operator=(const MutantStack& src){
+        if(this != &src){
+            std::stack<T> operator = this->c;
+        }
+        return *this;
+    };
+    ~MutantStack(){};
 
 };
 

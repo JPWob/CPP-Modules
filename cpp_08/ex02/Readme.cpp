@@ -1,6 +1,6 @@
 /*
 
-STD::STACK
+💡💡💡STD::STACK💡💡💡💡
 The interface for std::stack is deliberately minimal. 
 It only supports a handful of core operations, all of which run in O(1) constant time:
 
@@ -19,8 +19,22 @@ top()						Returns a reference to the element at the top without removing it.
 size()						Returns the number of elements currently in the stack.
 empty()						Returns true if the stack has no elements, false otherwise.
 
+💡💡💡Declaring a std::stack in main()💡💡💡
+  
+  std::stack<int> defaultStack   
+  //Parameter 1 (int): The data type (T) that the stack will hold.
+  //Because you omitted the second parameter, the compiler automatically defaults to using a std::deque<int> to hold the data under the hood.
 
-The Structure Under the Hood
+
+  //Parameter 1 (int): The data type (T) that the stack will hold.
+  //Parameter 2: The explicit container type used for underlying storage If you do not want to use a std::deque, you can explicitly tell the stack to use a different standard container, such as a std::vector or a std::list.
+  std::stack<int, std::vector<int> > myVectorStack;
+
+  other eg
+  std::stack<std::string, std::list<std::string> > listStack; // Custom Container: List of strings
+  
+
+💡💡💡The Structure Under the Hood💡💡💡
 Inside the C++ Standard Library source code, std::stack is defined roughly like this:
 
     template <typename T, typename Container = std::deque<T>>
@@ -56,7 +70,7 @@ Once your function knows what type of iterator it is returning, it goes inside t
     }
 
 
-STD::DEQUE
+💡💡💡STD::DEQUE💡💡💡
 - Double-Ended Queue,
 - std::deque gives you the best of both worlds between a std::vector and a std::list
 - While a std::vector is like a straight line that only grows efficiently at the very end, 

@@ -2,8 +2,13 @@
 #include <iostream>
 
 int main() {
-    std::vector<int> numbers = {10, 20, 30, 40};
+    std::vector<int> numbers; //= {10, 20, 30, 40}; Initilazier list does not exist in +98
 
+    numbers.push_back(10);
+    numbers.push_back(20);
+    numbers.push_back(30);
+    numbers.push_back(40);
+    
     // 1. Initialization: Start at the beginning
     // 2. Condition: Loop until we hit the end
     // 3. Increment: Move the bookmark forward (++it)
