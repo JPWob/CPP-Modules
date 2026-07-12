@@ -14,24 +14,24 @@ It only supports a handful of core operations, all of which run in O(1) constant
     The underlying container is stored in a protected member variable named c.
 
 push(value) / emplace(...) 	Adds an element to the top of the stack.
-pop()						Removes the element at the very top. (Note: This returns void, it does not return the value!)
-top()						Returns a reference to the element at the top without removing it.
+pop()						  Removes the element at the very top. (Note: This returns void, it does not return the value!)
+top(              Returns a reference to the element at the top without removing it.
 size()						Returns the number of elements currently in the stack.
 empty()						Returns true if the stack has no elements, false otherwise.
 
 💡💡💡Declaring a std::stack in main()💡💡💡
   
-  std::stack<int> defaultStack   
+std::stack<int> defaultStack   
   //Parameter 1 (int): The data type (T) that the stack will hold.
   //Because you omitted the second parameter, the compiler automatically defaults to using a std::deque<int> to hold the data under the hood.
 
 
-  //Parameter 1 (int): The data type (T) that the stack will hold.
+std::stack<int, std::vector<int> > myVectorStack;
+  //Parameter 1 (int): The data type (T) that the stack will hold.  
   //Parameter 2: The explicit container type used for underlying storage If you do not want to use a std::deque, you can explicitly tell the stack to use a different standard container, such as a std::vector or a std::list.
-  std::stack<int, std::vector<int> > myVectorStack;
 
-  other eg
-  std::stack<std::string, std::list<std::string> > listStack; // Custom Container: List of strings
+other eg
+std::stack<std::string, std::list<std::string> > listStack; // Custom Container: List of strings
   
 
 💡💡💡The Structure Under the Hood💡💡💡
