@@ -1,5 +1,31 @@
 /*
 
+
+GETLINE
+ std::getline can only read from streams. 
+ It cannot read from a plain string variable.
+ std::getline(std::istream& is, std::string& str, char delim)
+ 
+ std::ifstream  inFile;
+ inFile.is_open();
+ std::string    line;
+ std::getline(inFile, line);    //saving one line from inFile; Isolating exactly one row of data at a time
+
+ std::stringstream ss(line);    //Once you have that single line saved in a string, you feed it into a std::stringstream
+ std::getline(ss, token, ',');  //feeding line instead of ss is not possible. Must be a stream!
+
+1. std::ofstream (Output File Stream)
+    What it's for: Writing into files (creating or overwriting them).
+    Analogy: Think of it like std::cout, but instead of printing to the screen, it prints to a file.
+
+2. std::ifstream (Input File Stream)
+    What it's for: Reading from files.
+    Analogy: Think of it like std::cin, but instead of waiting for keyboard input, it grabs data out of a file.
+
+3. std::fstream (File Stream)
+    What it's for: Doing both at the same time.
+    Analogy: It can read and write simultaneously, which is handy for editing a file in place, though it requires managing file pointers manually.
+
 Writing to a file
 
 #include <iostream>
