@@ -1,103 +1,86 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <map>
+#include "BitcoinExchange.hpp"
 
 
-void get_data(std::map<std::string, double>& map_csv);
-bool isValidDate(std::string& date);
 
 int main(int argc, char* argv[]){
 
-    
     if(argc != 2){
         std::cerr << "Error: Usage \'./name filename\'" << std::endl;
         return 1;
     }
     
+    // Create a map to hold the CSV data
     std::map<std::string, double> map_csv;
-    get_data(map_csv);
-    get_input(map_csv, argv[1]);
+    if(! getCsvData(map_csv)){
+        return 1;
+    }
+    // Process Input file
+    if(! input_file(map_csv, argv[1])){
+        return 1;
+    }
 
-    /*
+    /* Test for printing out map_csv
     std::map<std::string, double>::const_iterator it;
     for(it = map_csv.begin(); it != map_csv.end(); ++it){
         // it->first is the Key (Date)
         // it->second is the Value (Decimal)
         std::cout << "Key: " << it->first << " | Value: " << it->second << std::endl;
     
-    }
-    */
+    }*/
     
-    
+    return 0;
 }
 
-int get_input(std::map<std::string, double>& map_csv, char*& filename ){
+
+int input_file(std::map<std::string, double>& map_csv, char*& filename ){
+    // Create stream, open file
     std::ifstream inFile(filename);
-    if(inFile.is_open()){
-        std::cout << "File is open" << std::endl;
+    if(!inFile.is_open()){
+        std::cerr << "Error opening file: "<< filename << std::endl;
+        return -1; 
     }
+    
+    // Read the file line by line
     std::string line;
+    std::string date;
+    double factor;
+    bool isFirstLine = true;
 
-    while(std::getline(inFile, line)){
-        std::stringstream ss(line);
-        std::string date;
-        double factor;
-        std::getline(ss, date, '|');
-        if(!isValidDate(date)){
-           return -1;
+    while(std::getline(inFile, line)){      //reading one line
+        if(isFirstLine)                 //check for header, skip line if it is a header
+        {                    
+            isFirstLine = false;
+            if(isHeader(line)) continue;
         }
-
+        else
+        {
+            if(!findDelimiter(line))
+                continue;
+            std::stringstream ss(line);     //line to stream, 
+            if(!getDate(ss, date) || !getFactor(ss, factor)){
+                continue;
+            }
+            printValue(map_csv, date, factor);
+        }
+        continue;
     }
+    return 1;
 }
 
 
-void get_data(std::map<std::string, double>& map_csv){
-    std::ifstream data("data.csv");
-    std::string csv_line;
-    if(data.is_open()){
-        std::cout << "Data is open" << std::endl;
+
+void printValue(std::map<std::string, double> map_csv, std::string& date, double factor){  
+
+    double value;
+    std::map<std::string, double>::const_iterator it = map_csv.upper_bound(date);
+
+    // If the iterator is at the very beginning, it means our input date  is older than the earliest date in our database (e.g., input is 2001, database starts in 2009).
+    if (it == map_csv.begin()) {
+        std::cerr << "Error: no exchange rate available for date => " << date << std::endl; //though technicallz this will only ever print for 2009-01-01
+        return;
     }
-    std::getline(data, csv_line);
+    --it; // Move the iterator back to the last date. absolutly necesary if date is not in csv file
     
-    while(std::getline(data, csv_line)){
-        if (csv_line.empty()) continue; //skip empty lines
-        
-        std::stringstream ss(csv_line);
-        std::string key;
-        
-        std::getline(ss, key, ','); //key becomes "2026-07-13"
-        
-        double value;
-        if(ss >> value)             //chechking
-            map_csv[key] = value;
-    }
-    
+    value = it->second * factor;   
+    std::cout << date << " => " << factor << " = " << value << std::endl;
 }
-
-bool isValidDate(std::string& date) {
-    // 3. Every other character must be a digit
-    for (size_t i = 0; i < 10; ++i) {
-        if (i == 4 || i == 7) continue;
-        if (!std::isdigit(date[i])) return false;
-    }
-    
-    // 1. Must be exactly 10 characters long
-    if (date.length() != 10) return false;
-    
-    // 2. Must have dashes at indices 4 and 7
-    if (date[4] != '-' || date[7] != '-') return false;
-    
-    
-    return true;
-}
-
-/*
-
-Container 1: Datum - Multi
-Conainer CVS: Datum - Wert
-
-Wert * Multi
-
-*/
