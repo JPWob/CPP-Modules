@@ -42,10 +42,12 @@ bool calculate(const std::string& input, std::stack<int>& rpn){
 
     int result = 0;
     for(size_t i = 0; i < input.length(); ++i){
+
         char c = input[i];
+        if (c == ' ')
+			continue;
         
-        if (c == ' ') continue;
-        if(std::isdigit(c))
+		if(std::isdigit(c))
             rpn.push(c - '0');
         else{
             if(rpn.size() < 2){

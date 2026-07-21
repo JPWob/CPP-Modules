@@ -7,7 +7,6 @@ class Bureaucrat{
 private:
 	const std::string 	_name;
 	int 				_grade;
-	Bureaucrat(); 		//forcefully forbid anyone from ever using it
 
 public:
 	// Constructors & Destructor (Orthodox Canonical Form)

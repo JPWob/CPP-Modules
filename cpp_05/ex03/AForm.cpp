@@ -4,7 +4,7 @@
 /*
 When you write the assignment operator for your AForm class, 
 you are only perAForming a partial assignment. 
-You are only copying the one variable that is actually allowed to change: _signature.
+You are only copying the one variable that is actually allowed to change: _issigned.
 Rest of src stays the same.
 */
 
