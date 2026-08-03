@@ -35,6 +35,13 @@ const char *Bureaucrat::GradeTooLowException::what() const throw(){
 };
 
 
+//Print operator
+std::ostream& operator<<(std::ostream& o, const Bureaucrat& src){
+	o << src.getName() << ", bureaucrat grade " << src.getGrade() << "." << std::endl;
+	return o;
+};
+
+// OCF
 Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name){
     std::cout << "Bureaucrat Constructor called" << std::endl;
     if (grade < 1) {
@@ -46,17 +53,13 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name){
     _grade = grade;
 };
 
+Bureaucrat::~Bureaucrat(){
+    std::cout << "Bureaucrat destructed" << std::endl;
+};
 
-/*
-Because _name is const, C++ will try to initialize it before 
-it even enters the {} of your constructor. Since you didn't tell it 
-what name to use, it defaults to an empty string ("").
-Then, *this = other; runs. As we established earlier, 
-your = operator safely ignores the const _name variable. 
-The result? Your newly copied Bureaucrat gets the correct grade, 
-but their name is permanently stuck as an empty string.
-*/
-
+Bureaucrat::Bureaucrat(const Bureaucrat& other) : _name(other._name), _grade(other._grade){
+    std::cout << "Bureaucrat Copy Constructor called" << std::endl;
+};
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
     if (this != &other){
@@ -64,23 +67,5 @@ Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other){
     }
     std::cout << "Bureaucrat Copy assignment called" << std::endl;
     return *this;
-};
-/*Print operator
-When main.cpp executes the line 	std::cout << intern;, 
-the compiler translates it mathematically 
-into a function call: 				operator<<(std::cout, intern);.
-*/
-
-std::ostream& operator<<(std::ostream& o, const Bureaucrat& src){
-	o << src.getName() << ", bureaucrat grade " << src.getGrade() << "." << std::endl;
-	return o;
-};
-
-Bureaucrat::~Bureaucrat(){
-    std::cout << "Bureaucrat destructed" << std::endl;
-};
-
-Bureaucrat::Bureaucrat(const Bureaucrat& other) : _name(other._name), _grade(other._grade){
-    std::cout << "Bureaucrat Copy Constructor called" << std::endl;
 };
 
