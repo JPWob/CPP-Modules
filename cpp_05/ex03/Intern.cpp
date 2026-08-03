@@ -24,9 +24,10 @@ AForm* Intern::makeForm(std::string formName, std::string target) {
         case 0: newForm = new ShrubberyCreationForm(target);break;
         case 1: newForm = new RobotomyRequestForm(target);break;
         case 2: newForm = new PresidentialPardonForm(target);break;
-        default:
-            std::cerr << "Error: Intern cannot create \"" << formName << "\": ";
-            throw AForm::NoSuchForm();
+        default:{
+            std::cerr << "Error: Intern cannot create: \"" << formName << "\". ";
+			throw AForm::NoSuchForm();
+		}
     }
     std::cout << "Intern created " << formName << std::endl;
     return newForm;

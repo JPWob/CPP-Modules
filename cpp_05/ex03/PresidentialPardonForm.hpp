@@ -7,14 +7,17 @@ class PresidentialPardonForm : public AForm {
 private:
     std::string _target;
 
+protected:
+	virtual void form_action() const;
+
 public:
+	//OCF
     PresidentialPardonForm(std::string target);
     virtual ~PresidentialPardonForm();
     PresidentialPardonForm(const PresidentialPardonForm& src);
     PresidentialPardonForm& operator=(const PresidentialPardonForm& src);
 
     const std::string& getTarget() const;
-    virtual void form_action() const;
 };
 
 #endif

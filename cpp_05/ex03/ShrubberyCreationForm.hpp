@@ -7,8 +7,10 @@ class ShrubberyCreationForm : public AForm{
 private:
     std::string _target;
 
-public:
+protected:
 	virtual void form_action() const;
+	
+public:
 	
 	//OCF
 	ShrubberyCreationForm(std::string target);
