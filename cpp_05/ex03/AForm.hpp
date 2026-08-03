@@ -14,6 +14,10 @@ private:
 	const int _execGrade;
 	bool _isSigned;
 
+protected:
+//Parent and Children (code inside the .cpp files) can access/override it
+	virtual void form_action() const = 0;
+
 public:
 	AForm(const std::string& name, const int gradeToSign, const int execGrade);
 	virtual ~AForm();
@@ -26,7 +30,7 @@ public:
 	int getGradeToSign() const;
 	int getExecGrade() const;
 
-    virtual void execute(const Bureaucrat& executor) const = 0;
+    void execute(const Bureaucrat& executor) const;
 
     //classes are inherited privatly by default
 	class GradeTooHighException : public std::exception{
@@ -39,7 +43,7 @@ public:
 		virtual const char* what() const throw();
 	};
 	
-	class IsNotSignedException : public std::exception{
+	class FormNotSignedException : public std::exception{
 	public:
 		virtual const char* what() const throw();
 	};

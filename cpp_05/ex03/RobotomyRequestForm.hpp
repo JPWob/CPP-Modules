@@ -11,13 +11,15 @@ private:
     std::string _target;
 
 public:
+	virtual void form_action() const;
+
+	//OCF
     RobotomyRequestForm(std::string target);
     virtual ~RobotomyRequestForm();
     RobotomyRequestForm(const RobotomyRequestForm& src);
     RobotomyRequestForm& operator=(const RobotomyRequestForm& src);
 
     const std::string& getTarget() const;
-    void execute(const Bureaucrat& executor) const;
 };
   
 #endif

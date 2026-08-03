@@ -9,7 +9,7 @@ int main (){
         Bureaucrat TooGood("TooGood", 0);
         std::cout << "This line should not print" << std::endl;
     }
-    catch(const Bureaucrat::GradeTooHighException& e){
+    catch(std::exception& e){
         std::cerr << e.what() << std::endl;
     }
 
@@ -18,7 +18,7 @@ int main (){
         Bureaucrat TooLazy("TooLazy", 151);
         std::cout << "This line should not print" << std::endl;
     }
-    catch(const Bureaucrat::GradeTooLowException& e){
+    catch(std::exception& e){
         std::cerr << e.what() << std::endl;
     }
 

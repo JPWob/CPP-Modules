@@ -16,26 +16,29 @@ int main(){
 
     
     try{
-    std::cout << std::endl << "---" << "Attention Intern at work" << "---"<< std::endl;
-    fpointer = Random.makeForm("robotom request", "Robo1");
+    	std::cout << std::endl << "---" << "Attention Intern at work" << "---"<< std::endl;
+    	fpointer = Random.makeForm("robotom request", "Robo1");
     }
-    catch (const std::exception& e) {// Catch your custom exception
+    catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
     
     try{
-    std::cout << std::endl << "---" << "ShrubberyCreationForm" << "---"<< std::endl;
-    Shrubb.beSigned(Bu);
-    Shrubb.execute(Bu);
-    std::cout << std::endl << "---" << "RobotomyRequestForm" << "---"<< std::endl;
-    fpointer->beSigned(Bu);
-    fpointer->execute(Bu);
-    std::cout << std::endl << "---" << "PresidentialPardonForm" << "---"<< std::endl;
-    Traitor.beSigned(Bu);
-    Traitor.execute(Bu);
-    std::cout << std::endl;
+    	std::cout << std::endl << "---" << "ShrubberyCreationForm" << "---"<< std::endl;
+    	Shrubb.beSigned(Bu);
+    	Shrubb.execute(Bu);
+    
+		std::cout << std::endl << "---" << "RobotomyRequestForm" << "---"<< std::endl;
+    	fpointer->beSigned(Bu);
+    	fpointer->execute(Bu);
+    	
+		std::cout << std::endl << "---" << "PresidentialPardonForm" << "---"<< std::endl;
+	    Traitor.beSigned(Bu);
+	    Traitor.execute(Bu);
+		
+	    std::cout << std::endl;
     }
-    catch (const std::exception& e) {// Catch your custom exception
+    catch (std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
 

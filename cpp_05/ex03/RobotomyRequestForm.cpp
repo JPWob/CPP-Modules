@@ -1,16 +1,9 @@
 #include "RobotomyRequestForm.hpp"
 
 
-void RobotomyRequestForm::execute(const Bureaucrat& executor) const{
-    if (!this->getIsSigned()){
-        std::cout << "Error executing RobotomyRequestForm \"" << this->getTarget() << "\": ";
-        throw AForm::IsNotSignedException();
-    }
-    if (executor.getGrade() > this->getExecGrade()) {
-        std::cout << "Error executing RobotomyRequestForm \"" << this->getTarget() << "\": ";
-        throw AForm::GradeTooLowException();
-    }
-    std::cout << "* LOUD DRILLING NOISES: BZZZZZZZ! * " << std::endl;
+void RobotomyRequestForm::form_action() const{
+
+    std::cout << "* LOUD DRILLING NOISES: BZZZZZZZ! * ... ";
 
     static bool seed = false; //ensure the seed is only generated once per program
     if(!seed){

@@ -8,12 +8,17 @@ You are only copying the one variable that is actually allowed to change: _issig
 Rest of src stays the same.
 */
 
-AForm& AForm::operator=(const AForm& src){
-	std::cout << "AForm Copy Assignment Operator called" << std::endl;
-	if(this != &src){
-		this->_isSigned = src._isSigned;
+void AForm::execute(const Bureaucrat& executor) const{
+	
+    if (!this->_isSigned){
+        throw AForm::FormNotSignedException();
 	}
-	return *this;
+    if (executor.getGrade() > this->getExecGrade()){
+		std::cerr << executor.getName() << " could not execute " << this->getName() << " because: ";
+        throw AForm::GradeTooLowException();
+	}
+
+    this->form_action(); //This function must be virtual and individual for each Child Form
 }
 								
 void AForm::beSigned(const Bureaucrat& b){
@@ -25,7 +30,7 @@ void AForm::beSigned(const Bureaucrat& b){
 	std::cout<< b.getName() << " sucessfully signed " << this->getName() << std::endl;
 }
 
-const char* AForm::IsNotSignedException::what() const throw(){
+const char* AForm::FormNotSignedException::what() const throw(){
 	return("AForm Error: Form is not signed!");
 }
 
@@ -65,7 +70,7 @@ int AForm::getExecGrade() const{
 }
 
 
-
+//OCF
 AForm::AForm(const std::string& name, const int gradeToSign, const int execGrade) 
 	: _name(name), _gradeToSign(gradeToSign), _execGrade(execGrade), _isSigned(false)
 {
@@ -85,3 +90,12 @@ AForm::~AForm(){
 AForm::AForm(const AForm& src) : _name(src._name), _gradeToSign(src._gradeToSign), _execGrade(src._execGrade), _isSigned(src._isSigned){
 	std::cout << "AForm CopyConstructor called" << std::endl;
 };
+
+
+AForm& AForm::operator=(const AForm& src){
+	std::cout << "AForm Copy Assignment Operator called" << std::endl;
+	if(this != &src){
+		this->_isSigned = src._isSigned;
+	}
+	return *this;
+}

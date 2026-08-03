@@ -1,38 +1,20 @@
 #include "ShrubberyCreationForm.hpp"
 
-void ShrubberyCreationForm::execute(const Bureaucrat& executor) const{
-
-    if(!this->getIsSigned())
-    {
-        std::cout << "Error executing ShrubberyCreationForm \"" << this->getTarget() << "\": ";
-        throw IsNotSignedException();
-    }
-    if(executor.getGrade() > this->getExecGrade())
-    {
-        std::cout << "Error executing ShrubberyCreationForm \"" << this->getTarget() << "\": ";
-        throw GradeTooLowException();
-    }    
+void ShrubberyCreationForm::form_action() const {
     // 1. Create and open the file. If "example.txt" doesn't exist, this will create it.
-    std::ofstream outFile(this->getTarget() + "_shrubbery");
+    std::ofstream outFile( (this->getTarget()+ "_shrubbery").c_str() );
     
     // 2. Always check if the file opened successfully
     if (!outFile) {
         throw std::runtime_error("Failed to create or open the file for Shrubbery");
     }
     // 3. Write data if successful
-   outFile << "               ,@@@@@@@,\n"
-                << "       ,,,.   ,@@@@@@/@@,  .oo8888o.\n"
-                << "    ,&%%&%&&%,@@@@@/@@@@@@,8888\\88/88\n"
-                << "   %&%%&*%%&*@@@@@@@@/@@@88888\\88888'\n"
-                << "   %&%/ %&%%&&@@\\ V /@@' `88\\8 `/88'\n"
-                << "   `&&%\\ `&&%&  \\ | /       `88\\88'\n"
-                << "       `Y&\\    ` | /        /88'\n"
-                << "           `\\   | |        / /\n"
-                << "             \\_ | |       / /\n"
-                << "             _\\_|_|_  _  /_/_\n"
-                << "            [___________]\n"
-                << "             |         |\n"
-                << "             |_________|\n";
+	outFile << "      /\\      \n"
+            << "     /  \\     \n"
+            << "    /    \\    \n"
+            << "   /______\\   \n"
+            << "      ||      \n"
+            << "      ||      \n";
     outFile.close();
 }
 

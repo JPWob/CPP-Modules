@@ -8,13 +8,16 @@ private:
     std::string _target;
 
 public:
-    ShrubberyCreationForm(std::string target);
+	virtual void form_action() const;
+	
+	//OCF
+	ShrubberyCreationForm(std::string target);
     ~ShrubberyCreationForm();
     ShrubberyCreationForm(const ShrubberyCreationForm& src);
     ShrubberyCreationForm& operator=(const ShrubberyCreationForm& src);
 
     const std::string& getTarget() const;
-    void execute(const Bureaucrat& executor) const; //"I will not change any member variables of this form while executing it."
-
-
+	
+	
 };
+// const at end: "I will not change any member variables of this form while executing it."

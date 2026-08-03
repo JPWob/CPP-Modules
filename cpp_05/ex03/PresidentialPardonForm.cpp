@@ -1,25 +1,21 @@
 #include "PresidentialPardonForm.hpp"
 #include "Bureaucrat.hpp"
-#include <iostream>
 
-void PresidentialPardonForm::execute(const Bureaucrat& executor) const{
-    if (!this->getIsSigned()){
-    std::cout << "Error executing PresidentialPardonForm \"" << this->getTarget() << "\": ";
-    throw AForm::IsNotSignedException();
-    }
-    if (executor.getGrade() > this->getExecGrade()) {
-        std::cout << "Error executing PresidentialPardonForm \"" << this->getTarget() << "\": ";
-        throw AForm::GradeTooLowException();
-    }
+
+// PresidentialPardonForm: Informs that <target> has been pardoned by Zaphod Beeblebrox. 
+// Required grades: sign 25, exec 5
+
+void PresidentialPardonForm::form_action() const{
     std::cout << this->getTarget() << " has been pardoned by Zaphod Beeblebrox the Great" << std::endl;
-
 }
 
 const std::string& PresidentialPardonForm::getTarget() const {
     return this->_target;
 }
 
-//std CC Form
+//OCFForm
+
+//Child Constructor, calling the Base Constructor first. then setting target
 PresidentialPardonForm::PresidentialPardonForm(std::string target) :
     AForm("PresidentialPardonForm", 25, 5), _target(target) {
     std::cout << "PresidentialPardonForm Constructor called" << std::endl;
