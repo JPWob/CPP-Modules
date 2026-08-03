@@ -12,6 +12,8 @@ int main(){
     PresidentialPardonForm Traitor("Traitor");
 	std::cout << std::endl;
 
+	//Not allowed: AForm A();
+
     try{
     std::cout << std::endl << "---" << "ShrubberyCreationForm" << "---"<< std::endl;
     Shrubb.beSigned(Bu);
@@ -20,6 +22,7 @@ int main(){
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
+
 	try{
     std::cout << std::endl << "---" << "RobotomyRequestForm" << "---"<< std::endl;
     Robo.beSigned(Bu);
@@ -28,6 +31,7 @@ int main(){
     catch (const std::exception& e) {
         std::cerr << e.what() << std::endl;
     }
+
 	try{
     std::cout << std::endl << "---" << "PresidentialPardonForm" << "---"<< std::endl;
     Traitor.beSigned(Bu);

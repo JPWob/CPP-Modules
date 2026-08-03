@@ -1,14 +1,13 @@
 #include "ShrubberyCreationForm.hpp"
 
 void ShrubberyCreationForm::form_action() const {
-    // 1. Create and open the file. If "example.txt" doesn't exist, this will create it.
+    // Create and open the file. If "example.txt" doesn't exist, this will create it.
     std::ofstream outFile( (this->getTarget()+ "_shrubbery").c_str() );
     
-    // 2. Always check if the file opened successfully
     if (!outFile) {
         throw std::runtime_error("Failed to create or open the file for Shrubbery");
     }
-    // 3. Write data if successful
+
 	outFile << "      /\\      \n"
             << "     /  \\     \n"
             << "    /    \\    \n"
@@ -32,8 +31,7 @@ ShrubberyCreationForm::~ShrubberyCreationForm(){
 };
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& src) :
-AForm(src),  _target(src._target)
-{
+AForm(src),  _target(src._target){
     std::cout << "ShrubberyCreationForm CopyConstructor called" << std::endl;
 };
 

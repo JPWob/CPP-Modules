@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 
+//accessors
 const std::string& Bureaucrat::getName() const{
     return(this->_name);
 };
@@ -27,7 +28,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw(){
     return ("Bureaucrat Error: Grade is too low! (Must be <= 150)");
 };
 
-/*Print operator
+/*Print operator overloader
 When main.cpp executes the line 	std::cout << intern;, 
 the compiler translates it mathematically 
 into a function call: 				operator<<(std::cout, intern);.

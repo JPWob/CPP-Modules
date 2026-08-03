@@ -10,8 +10,10 @@ class RobotomyRequestForm : public AForm {
 private:
     std::string _target;
 
-public:
+protected:
 	virtual void form_action() const;
+
+public:
 
 	//OCF
     RobotomyRequestForm(std::string target);
