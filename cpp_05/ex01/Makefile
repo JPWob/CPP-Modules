@@ -3,8 +3,8 @@ CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp Bureaucrat.cpp AAAForm.cpp
-NAME = AAForm
+SRCS = main.cpp Bureaucrat.cpp Form.cpp
+NAME = Form
 
 # Object files go into .o/ folder
 OBJDIR = .obj

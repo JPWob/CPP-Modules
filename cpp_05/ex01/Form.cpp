@@ -1,20 +1,7 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
 
-/*
-When you write the assignment operator for your Form class, 
-you are only performing a partial assignment. 
-You are only copying the one variable that is actually allowed to change: _signature.
-Rest of src stays the same.
-*/
-Form& Form::operator=(const Form& src){
-	std::cout << "Form Copy Assignment Operator called" << std::endl;
-	if(this != &src){
-		this->_isSigned = src._isSigned;
-	}
-	return *this;
-}
-								
+
 void Form::beSigned(const Bureaucrat& b){
 	if(_gradeToSign < b.getGrade()){
 		std::cout << b.getName() << " couldnt sign " << this->getName() << " because: ";
@@ -22,23 +9,6 @@ void Form::beSigned(const Bureaucrat& b){
 	}
 	_isSigned = true;
 	std::cout<< b.getName() << " sucessfully signed " << this->getName() << std::endl;
-}
-
-
-const char* Form::GradeTooHighException::what() const throw(){
-	return("Form Error: Grade is too high!");
-};
-
-const char* Form::GradeTooLowException::what() const throw(){
-	return("Form Error: Grade is too Low!");
-};
-
-
-
-std::ostream& operator<<(std::ostream& o, const Form& f){
-	o << f.getName() << " has sign status (1 is signed): " << f.getIsSigned() << std::endl;
-    o << "Grade to Sign: " << f.getGradeToSign() << ". Grade to execute: " << f.getExecGrade() << "." << std::endl;
-	return o;
 }
 
 std::string Form::getName() const{
@@ -57,8 +27,23 @@ int Form::getExecGrade() const{
 	return(_execGrade);
 }
 
+//Exeptions
+const char* Form::GradeTooHighException::what() const throw(){
+	return("Form Error: Grade is too high!");
+};
 
+const char* Form::GradeTooLowException::what() const throw(){
+	return("Form Error: Grade is too Low!");
+};
 
+//Print operator
+std::ostream&operator<<(std::ostream& o, const Form& f){
+	o << f.getName() << " has sign status (1 is signed): " << f.getIsSigned() << std::endl;
+	o << "Grade to Sign: " << f.getGradeToSign() << ". Grade to execute: " << f.getExecGrade() << "." << std::endl;
+	return o;
+}
+
+//OCF
 Form::Form(const std::string& name, const int gradeToSign, const int execGrade) 
 	: _name(name), _gradeToSign(gradeToSign), _execGrade(execGrade), _isSigned(false)
 {
@@ -70,6 +55,25 @@ Form::Form(const std::string& name, const int gradeToSign, const int execGrade)
 		throw Form::GradeTooLowException();
 	}
 }
+
+/*
+Copy Assignment operator
+Standard copy assignment operator usually overwrite all member variables 
+of the target (this) object, so that it becomes an exact replica of src.
+For your Form class, you can only do a partial assignment because almost all
+of Form variables are const !
+You are only copying the one variable that is actually allowed to change: _signature.
+Rest of src stays the same.
+*/
+Form& Form::operator=(const Form& src){
+	std::cout << "Form Copy Assignment Operator called" << std::endl;
+	if(this != &src){
+		this->_isSigned = src._isSigned;
+	}
+	return *this;
+}
+								
+
 
 Form::~Form(){
 	std::cout << "Form Destructor called" << std::endl;

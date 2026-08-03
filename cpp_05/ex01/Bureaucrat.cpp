@@ -3,7 +3,7 @@
 
 //new
 void Bureaucrat::signForm(Form& f){
-	f.beSigned(*this);
+	f.beSigned(*this); //Form Member function
 }
 
 //from ex00
