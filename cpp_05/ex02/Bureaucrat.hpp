@@ -1,5 +1,6 @@
 #ifndef BUREAUCRAT_HPP
 #define BUREAUCRAT_HPP
+
 #include <iostream>
 #include <string>
 #include <exception> // Required for std::exception
@@ -13,14 +14,15 @@ private:
 
 public:
 	//new:
-	void signAForm(AForm& f);
-
+	void executeForm(AForm const& f) const;
+	
 	// Constructors & Destructor (Orthodox Canonical AForm)
 	Bureaucrat(std::string name, int grade);
 	~Bureaucrat();
 	Bureaucrat(const Bureaucrat& other);
 	Bureaucrat& operator=(const Bureaucrat& other);
 	
+	void signAForm(AForm& f);
 	const std::string& 	getName() const;
 	int getGrade() const;
 	void incrementGrade();

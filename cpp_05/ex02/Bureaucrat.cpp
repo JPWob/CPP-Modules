@@ -2,6 +2,11 @@
 #include "AForm.hpp"
 
 //new
+void Bureaucrat::executeForm(AForm const& f) const{
+	f.execute(*this);
+}
+
+//from ex01
 void Bureaucrat::signAForm(AForm& f){
 	f.beSigned(*this);
 }

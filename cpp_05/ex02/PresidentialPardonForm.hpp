@@ -14,7 +14,16 @@ public:
     PresidentialPardonForm& operator=(const PresidentialPardonForm& src);
 
     const std::string& getTarget() const;
-    void execute(const Bureaucrat& executor) const;
+    virtual void form_action() const;
 };
 
 #endif
+
+
+/*
+When you create a child object like PresidentialPardonForm form("Target");:
+
+1. Memory is allocated for the whole object (base members + child members).
+2. The PresidentialPardonForm constructor calls the AForm::AForm(...) constructor.
+3. After execution, the rest of PresidentialPardonForm's constructor executes.
+*/
