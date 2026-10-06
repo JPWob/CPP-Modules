@@ -8,19 +8,19 @@ int main(int argc, char* argv[]) {
         return 1; // Return an error code
     }
     ScalarConverter::convert(argv[1]);
-    // ScalarConverter::convert("42.1234567890123");
-    // ScalarConverter::convert("3.33f");
-    // ScalarConverter::convert("5.7f864f");
-    // ScalarConverter::convert("   2147483647");
-    // ScalarConverter::convert("   2147483648");
-
-    // float f = -std::numeric_limits<float>::infinity();
-    // std::cout << f << std::endl;
-    // std::cout << static_cast<double>(f) << std::endl;
-    //float ff = +std::numeric_limits<float>::infinity();
-   // double d = -std::numeric_limits<double>::infinity();
-   // float dd = +std::numeric_limits<double>::infinity();
-   
+	std::cout << std::endl << "3.33f" << std::endl;
+    ScalarConverter::convert("3.33f");
+	std::cout << std::endl <<"5.7f864f" << std::endl ;
+    ScalarConverter::convert("5.7f864f");
+	std::cout << std::endl << "   2147483647" << std::endl;
+    ScalarConverter::convert("   2147483647");
+	std::cout << std::endl << "   2147483648" << std::endl;
+    ScalarConverter::convert("   2147483648");
+	std::cout << std::endl << "42" << std::endl;
+    ScalarConverter::convert("42");
+	std::cout << std::endl << "42.1234567890123" << std::endl;
+    ScalarConverter::convert("42.1234567890123");
+	
 }
 
 

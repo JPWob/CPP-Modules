@@ -1,5 +1,4 @@
 #include <iostream>
-#include <string.h>
 
 class Base{
 	public:
@@ -13,6 +12,7 @@ class A : public Base{
 	A(int a);
 	~A();
 };
+
 class B : public Base{
 
 	public:
@@ -21,6 +21,7 @@ class B : public Base{
 	~B();
 
 };
+
 class C : public Base{
 	public:
 	char tschar;

@@ -2,7 +2,12 @@
 
 void printAllConversions(char c, int i, const float& f, const double& d, bool isImpossible){
 
-    std::cout << std::fixed << std::setprecision(1);
+    // Check if the value has a fractional component:
+	if (d != static_cast<long long>(d)) {// Has decimals: reset to default/suitable precision so digits aren't chopped off
+    
+    	std::cout.unsetf(std::ios::fixed);
+    	std::cout << std::setprecision(std::numeric_limits<double>::digits10);
+	}
 
     std::cout << "char: ";
     if (isImpossible || std::isnan(d) || std::isinf(d) || i < 0 || i > 127) {
@@ -23,29 +28,22 @@ void printAllConversions(char c, int i, const float& f, const double& d, bool is
     std::cout << "float: ";
     if (isImpossible) {
         std::cout << "impossible\n";
-    } 
-    else if (std::isnan(f)) {
+    } else if (std::isnan(f)) {
         std::cout << "nanf\n";
-    } 
-    else if (std::isinf(f)) {
+    } else if (std::isinf(f)) {
         std::cout << (f < 0 ? "-inff\n" : "+inff\n");
-    } 
-    else 
-    {
-        std::cout << f << "f" << "\n";
+    } else {
+        std::cout << f << "f\n";
     }
 
     std::cout << "double: ";
     if (isImpossible) {
         std::cout << "impossible\n";
-    } 
-    else if (std::isnan(d)) {
+    } else if (std::isnan(d)) {
         std::cout << "nan\n";
-    } 
-    else if (std::isinf(d)) {
+    } else if (std::isinf(d)) {
         std::cout << (d < 0 ? "-inf\n" : "+inf\n");
-    } 
-    else {
+    } else {
         std::cout << d << "\n";
     }
 
@@ -57,20 +55,19 @@ void printPseudo(const std::string& str){
     bool isFloatPseudo = (str == "nanf" || str == "+inff" || str == "-inff");
     
     if (isFloatPseudo) {
-        float f = std::stof(str);
-        char c  = static_cast<char>(f);
-        int i   = static_cast<int>(f);
-        double d = static_cast<double>(f);
+        float  	f = std::strtof(str.c_str(), NULL);
+        char	c = static_cast<char>(f);
+        int 	i = static_cast<int>(f);
+        double 	d = static_cast<double>(f);
         printAllConversions(c, i, f, d, false);
     } 
     else {
-        double d = std::stod(str); //beause a float or a double variable in C++ only stores raw numerical data, so no f for floats
-        char c   = static_cast<char>(d);
-        int i    = static_cast<int>(d);
-        float f = static_cast<double>(d);
+        double 	d = std::strtod(str.c_str(), NULL);
+        char 	c = static_cast<char>(d);
+        int 	i = static_cast<int>(d);
+        float 	f = static_cast<double>(d);
         printAllConversions(c, i, f, d, false);
-    }
-
+	}
 }
 
 bool isPseudo(const std::string& str) {
@@ -96,25 +93,26 @@ bool charliteral(const std::string& str){
     return false;
 }
 
-std::string get_rid_of_f(const std::string& str){
+std::string trimmedStr(const std::string& str){
 
-    if((str.length() > 1) && (str[str.length() - 1] == 'f'))
-    {
+    if((str.length() > 1)
+        && (str[str.length() - 1] == 'f')){
         std::string trimStr = str.substr(0, str.length() - 1) ;
         return trimStr;
     }
     return str;
 }
                                                 
-bool checkCleanInput(std::stringstream& ss,  double& doubleVal){ //pass double as reference!
+bool isCleanInput(std::stringstream& ss,  double& doubleVal){ //pass double as reference!
     char leftover;
 
     if ((ss >> doubleVal) && !(ss >> leftover)) {
         return true; // clean string
     }
-    printAllConversions('\0',0 ,0.0f,0.0, true);
     return false; // Found garbage text or extraction failed
 }
+
+
 
 void ScalarConverter::convert(const std::string& str){
 
@@ -125,47 +123,28 @@ void ScalarConverter::convert(const std::string& str){
     if(charliteral(str)){
         return;
     }
-    std::string trimStr = get_rid_of_f(str); 
+    std::string trimStr = trimmedStr(str); //Get rid of 1 'f' max before working with ss. While std::stod and std::stof are great at finding a number inside a string, they suffer from a major flaw: they ignore trailing garbage text. So manual check is necesary
     std::stringstream ss(trimStr);
-    double doubleVal = 0.0;
+    double doubleVal = 0.0;					// reserve biggest space possible
 
-    if(!checkCleanInput(ss, doubleVal)){
-        return;
+    if(!isCleanInput(ss, doubleVal)){
+		printAllConversions('\0',0 ,0.0f,0.0, true);
     }
-    printAllConversions(doubleVal, doubleVal, doubleVal, doubleVal, false);
+	else
+    	printAllConversions(doubleVal, doubleVal, doubleVal, doubleVal, false);
 }
 
 
+ScalarConverter::ScalarConverter(){};
 
 /*
-
-If you force std::setprecision(1);
-both your float and double outputs will display 42.1 (decimal) 
-even if input "42.12345"
-
-std::string trimStr = get_rid_of_f(str);
-Only one char is allowed, if a number is entered: 1 letter f at the end for float type.
-So we trimm the str in case there is a 'f' at the end.
-We do this, because std::stringstream (ss >> doubleVal) will leave anything that is not number in 'leftovers'.
-When a trimmed string leaves leftovers, we can be sure is is garbage and invalid input!
-    
-std::stringstream ss(trimStr);
-
-(ss >> doubleVal);
-Reading ss into a double:
-double can represent every standard scalar type required by this assignment without losing information during parsing.
-Using int or float could be to small for a high precision double: Risk of Overflow or Information Loss!
-A float can only handle numbers up to aprox 3.4 \times 10^{38}$
-A double can reach up to $\approx 1.7 \times 10^{308}$.
-
 //42.3f.3f
 stripping only the last 'f' leaves you with "42.3f.3".
 
 0)  ss >> doubleVal reads "42.3" successfully into your double variable.
 1)  The stream stops reading at the second 'f' because it's not a valid part of a number.
 2)  Crucially, the remaining string inside the stream is now "f.3".
-    This is why leftover check (ss >> leftover). 
-    Because there is still "f.3" sitting in the stream, attempting to read into leftover will succeed.
+    This is where the leftover check (ss >> leftover) saves the day. Because there is still "f.3" sitting in the stream, attempting to read into leftover will succeed (it will grab the 'f')
 
 //a42.1f
 stripping only the last 'f' leaves you with "a42.1"

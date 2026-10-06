@@ -3,10 +3,16 @@
 #include <sstream>
 #include <iomanip> // For std::fixed and std::setprecision
 #include <limits>
+#include <climits>
 #include <cmath>
+#include <cstdlib>
 
 
 class ScalarConverter{
-    public:
+public:
     static void convert(const std::string& str);
+
+private:
+	ScalarConverter();
+
 };
