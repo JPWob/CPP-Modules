@@ -3,8 +3,6 @@
 #include <sstream>
 #include <iomanip> // For std::fixed and std::setprecision
 #include <limits>
-#include <climits>
-#include <cmath>
 #include <cstdlib>
 
 
@@ -14,5 +12,9 @@ public:
 
 private:
 	ScalarConverter();
+	~ScalarConverter();
+	ScalarConverter(const ScalarConverter& other);
+	ScalarConverter& operator=(const ScalarConverter& other);
+	
 
 };
