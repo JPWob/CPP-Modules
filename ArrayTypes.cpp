@@ -163,5 +163,29 @@ int main(){
 
 
 
+/*
+
+Why Compilers need the definition of a Template function when compiling a .cpp file.
+
+Normally:
+If a definition for a function needed in main.cpp lives in another.cpp file, 
+the linker will find the binary code of that definition in the another.o file and match it.
+
+In case of Template:
+If the definition of the Template function lives in another.cpp file. No binary code will be
+generated for it, because Templates are just blueprints. It is not possible for the compiler to assemble
+anything, as Template function could be called for any possible sized type of variabel.
+The Compiler will simply skip this part of another.cpp.
+Therefore, the Linker wont find the definition of it in any .o file, to match the function call from main.o.
+This is why, when main.cpp is getting compiled, we should #include a .hpp or .tpp that serves the definition.
+If the Template definition is available at assembly time, the function can be insantiates with concrete types and
+will be assembled into the .o file.
 
 
+
+the linker will later ma
+binary code
+
+
+
+*/
