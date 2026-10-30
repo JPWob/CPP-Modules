@@ -122,10 +122,10 @@ bool charliteral(const std::string& str){
 
 LiteralType detectNumericType(const std::string& str) {
 
-	// Check signs
 	size_t i = 0;
 	if (str[i] == '+' || str[i] == '-')
 		i++;
+
 	if (i == str.length())
 		return INVALID;
 
@@ -139,7 +139,6 @@ LiteralType detectNumericType(const std::string& str) {
 			hasDot = true;
 		}
 		else if (str[i] == 'f' && i == str.length() - 1) {
-			// 'f' is only valid as the very last character of a float
             return (hasDigits && hasDot) ? FLOAT : INVALID;
 		}
 		else if(!isdigit(static_cast<unsigned char>(str[i]))){
@@ -159,13 +158,12 @@ LiteralType detectNumericType(const std::string& str) {
 
 
 void ScalarConverter::convert(const std::string& string){
-
 	
-	size_t i = 0;
-	while(i < string.length() && (string[i] == ' ' || string[i] == '\t' ))
-		i++;
+	size_t start = 0;
+	while (start < string.length() && (string[start] == ' ' || string[start] == '\t'))
+    start++;
 		
-	std::string str = string.substr(i);
+	std::string str = string.substr(start);
 	
 	if (isPseudo(str)) {
 		printPseudo(str);
@@ -175,25 +173,25 @@ void ScalarConverter::convert(const std::string& string){
 		return;
 	}
 		
-	std::cout << std::fixed << std::setprecision(1); 
 	LiteralType type = detectNumericType(str);
+	
+	std::cout << std::fixed << std::setprecision(1); 
 		
 	if (type == INT) {
- 		char* endPtr = NULL;
-	    double val = std::strtod(str.c_str(), &endPtr);
+	    double val = std::strtod(str.c_str(), NULL);
 
 	    // Check if it fits within standard int bounds
 	    if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min()) {
-	        // Int overflows: char and int are impossible, float and double reflect the true value
+	        // Int overflows: char and int are impossible
 	        float f = static_cast<float>(val);
-	        printAllConversions(-1, f, f, val, false);
+	        printAllConversions(f, f, f, val, false);
 	        return;
 	    }
 
-	    int i = static_cast<int>(val);
-	    char   c = static_cast<char>(i);
-	    float  f = static_cast<float>(i);
-	    double d = static_cast<double>(i);
+	    int		i = static_cast<int>(val);
+	    char   	c = static_cast<char>(i);
+	    float  	f = static_cast<float>(i);
+	    double 	d = static_cast<double>(i);
 
 	    printAllConversions(c, i, f, d, false);
 	    return;
@@ -233,21 +231,12 @@ void ScalarConverter::convert(const std::string& string){
 
 
 ScalarConverter::ScalarConverter(){};
+ScalarConverter::~ScalarConverter(){};
+ScalarConverter::ScalarConverter(const ScalarConverter& other){
+	(void)other;
+};
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& other){
+	(void)other;
+	return *this;
+}
 
-/*
-//42.3f.3f
-stripping only the last 'f' leaves you with "42.3f.3".
-
-0)  ss >> doubleVal reads "42.3" successfully into your double variable.
-1)  The stream stops reading at the second 'f' because it's not a valid part of a number.
-2)  Crucially, the remaining string inside the stream is now "f.3".
-    This is where the leftover check (ss >> leftover) saves the day. Because there is still "f.3" sitting in the stream, attempting to read into leftover will succeed (it will grab the 'f')
-
-//a42.1f
-stripping only the last 'f' leaves you with "a42.1"
-
-0) ss >> doubleVal;
-   -The very first character it encounters is 'a'
-   -'a' cannot form any part of a valid floating-point number, the extraction fails immediately.
-   -The stream internally sets its failbit flag to true.
-*/

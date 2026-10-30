@@ -1,32 +1,33 @@
 #include <iostream>
 
 class Base{
-	public:
+public:
 	virtual ~Base();
 
 };
 
 class A : public Base{
-	public:
-	int alpha;
+public:
 	A(int a);
 	~A();
+
+	int alpha;
 };
 
 class B : public Base{
-
-	public:
-	std::string string;
+public:
 	B(std::string str);
 	~B();
+
+	std::string string;
 
 };
 
 class C : public Base{
-	public:
-	char tschar;
+public:
 	C(char c);
 	~C();
+	char letter;
 };
 
 /* Dynamik Casting

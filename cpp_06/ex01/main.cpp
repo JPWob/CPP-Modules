@@ -8,13 +8,9 @@ int main(){
 	(data).str = "Hello";
 	(data).n = 42;
 
-	std::cout << "Original pointer (&data):\t" << &data << std::endl;
-
 	raw = Serializer::serialize(&data); 								//returns the unsigned integer type uintptr_t
-    std::cout << "Serialized &data (decimal):\t" << &data << std::endl;
-	std::cout << std::hex;												// Using std::hex changes the output format to hexadecimal
-	std::cout << "Serialized &data (Hex):\t\t0x"  << raw << std::endl;
-	std::cout << std::dec;												// Switch back to decimal for subsequent prints if needed
+	std::cout << "Original pointer (&data):\t" << &data << std::endl;
+    std::cout << "Serialized pointer(&data):\t" << raw << std::endl;
 
 	
 	//treat the bits (raw) as a memory address again

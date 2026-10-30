@@ -4,7 +4,7 @@ CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp
-NAME = templates
+NAME = whatever
 
 # Object files go into .o/ folder
 OBJDIR = .obj

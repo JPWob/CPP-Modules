@@ -20,7 +20,7 @@ B::~B(){
 	std::cout << "B Destructor called" << std::endl;
 }
 
-C::C(char tschar) : tschar(tschar){
+C::C(char c) : letter(c){
 	std::cout << "C Constructor called" << std::endl;
 }
 

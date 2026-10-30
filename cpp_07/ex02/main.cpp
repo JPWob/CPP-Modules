@@ -1,9 +1,6 @@
-#include <iostream>
 #include "Array.hpp"
 
 #define MAX_VAL 4
-
-
 
 int main()
 {

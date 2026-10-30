@@ -25,14 +25,3 @@ template <typename T>
 const T& max(const T& a, const T& b){
     return((a > b) ? a : b);
 }
-
-/*
-// Force the compiler to validate all 6 comparison operators.
-    // The (void) cast prevents "unused expression" compiler warnings.
-    (void)(a < b);
-    (void)(a > b);
-    (void)(a <= b);
-    (void)(a >= b);
-    (void)(a == b);
-    (void)(a != b);
-*/
