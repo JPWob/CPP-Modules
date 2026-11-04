@@ -1,8 +1,39 @@
 /*
 
+💡💡💡Declaring a std::stack in main()💡💡💡
+  
+std::stack<int> defaultStack   
+  - Parameter 1 (int): The data type (T) that the stack will hold.
+  - Because you omitted the second parameter, the compiler automatically defaults to using a std::deque<int> to hold the data under the hood.
+
+
+std::stack<int, std::vector<int>> myVectorStack;
+  //Parameter 1 (int): The data type (T) that the stack will hold.  
+  //Parameter 2: The explicit container type used for underlying storage If you do not want to use a std::deque, you can explicitly tell the stack to use a different standard container, such as a std::vector or a std::list.
+
+other eg
+std::stack<std::string, std::list<std::string> > listStack; // Custom Container: List of strings
+
+Why would i choose another underlying container than deque?
+- std::DEQUE 
+  -- stores elements in scattered memory chunks with a central pointer array (a "map") that keeps track of where all these blocks are located in RAM.
+  -- This allows for fast insertion and deletion at both ends of the deque, while still maintaining relatively good cache performance for traversal.
+  -- When a std::deque grows, elements stay put, but its internal block-map (pointers) might update.
+- std::VECTOR 
+  -- choose std::vector when you care deeply about hardware performance and memory contiguity.
+  -- stores all elements in a single, unbroken block of memory.
+  -- When a std::vector grows out of capacity, it must allocate a brand-new, larger block of memory, copy/move all existing elements over, and free the old block.
+- std::LIST
+  -- choose a node-based container like std::list when you need ABSOLUTE pointer stability.
+  -- stores each element in its own separate memory block, with pointers linking them together.
+  -- This allows for fast insertion and deletion anywhere in the list, but it comes with extra memory overhead for the pointers and slower traversal due to cache misses.
+
+
 💡💡💡STD::STACK💡💡💡💡
-The interface for std::stack is deliberately minimal. 
-It only supports a handful of core operations, all of which run in O(1) constant time:
+std::stack: This is a standard container adaptor in the C++ Standard Library. 
+It provides a Last-In, First-Out (LIFO) data structure.
+Meaning the last element added is the first one removed), exposing only 
+standard stack operations like push(), pop(), top(), and empty().
 
 - LIFO Management: 
     Elements are inserted (pushed) and extracted (popped) from the same end, known as the top of the stack.
@@ -14,24 +45,11 @@ It only supports a handful of core operations, all of which run in O(1) constant
     The underlying container is stored in a protected member variable named c.
 
 push(value) / emplace(...) 	Adds an element to the top of the stack.
-pop()						  Removes the element at the very top. (Note: This returns void, it does not return the value!)
-top(              Returns a reference to the element at the top without removing it.
-size()						Returns the number of elements currently in the stack.
-empty()						Returns true if the stack has no elements, false otherwise.
+pop()						            Removes the element at the very top. (Note: This returns void, it does not return the value!)
+top()                       Returns a reference to the element at the top without removing it.
+size()						          Returns the number of elements currently in the stack.
+empty()						          Returns true if the stack has no elements, false otherwise.
 
-💡💡💡Declaring a std::stack in main()💡💡💡
-  
-std::stack<int> defaultStack   
-  //Parameter 1 (int): The data type (T) that the stack will hold.
-  //Because you omitted the second parameter, the compiler automatically defaults to using a std::deque<int> to hold the data under the hood.
-
-
-std::stack<int, std::vector<int> > myVectorStack;
-  //Parameter 1 (int): The data type (T) that the stack will hold.  
-  //Parameter 2: The explicit container type used for underlying storage If you do not want to use a std::deque, you can explicitly tell the stack to use a different standard container, such as a std::vector or a std::list.
-
-other eg
-std::stack<std::string, std::list<std::string> > listStack; // Custom Container: List of strings
   
 
 💡💡💡The Structure Under the Hood💡💡💡
@@ -53,6 +71,15 @@ Inside the C++ Standard Library source code, std::stack is defined roughly like 
         Container c; 
     };
 
+typedef (The Nickname Creator)
+- A way to create a shorthand alias for a type that already exists.
+- eg: typedef Container container_type;
+- "Whenever someone uses the name container_type, they actually mean whatever type Container is."
+
+
+typename (The Type Placeholder)
+- A keyword used inside a template declaration
+- (Note: In template parameters, class and typename mean the exact same thing. template <class T> and template <typename T> do identical jobs).
 -> typename Container = std::deque<T>>   ||| Could also swap for vector or list
 Swappable Interiors: As long as the inner container has functions named push_back(), pop_back(), and back(), std::stack can wrap around it. 
 This is why you can easily swap out std::deque for std::vector or std::list. 
@@ -64,8 +91,10 @@ You use the public container_type shortcut to tell your code eg. what type of it
 Because it is public, you can access it by writing std::stack<T>::container_type.
     typedef typename std::stack<T>::container_type::iterator iterator;
 
-Once your function knows what type of iterator it is returning, it goes inside the protected member variable c to pull out the live, actual memory markers (begin() and end()).
-    iterator begin() { 
+Once your function knows what type of iterator it is returning, 
+it goes inside the protected member variable c to pull out the live, 
+actual memory markers (begin() and end()).
+iterator begin() { 
         return this->c.begin(); 
     }
 
@@ -101,6 +130,8 @@ When you are in main.cpp, you are in the global scope. You are an "outsider" to 
     std::stack<int> s;
     s.c.begin(); // ❌ ERROR: 'c' is protected!
   }
+
+
 Because c is marked protected inside std::stack, the compiler enforces a strict security wall. 
 It tells the global scope: "You do not have clearance to touch c. 
 Only the stack itself and its children are allowed."
@@ -123,7 +154,6 @@ Inside the MutantStack class declaration, you are a child class (a derived class
   };
 
 
-
 If you inherit from std::stack (like Mutant Stack), you can bypass the restrictions 
 and talk directly to the inner std::deque using push_front() == Adding to bottom of the stack. 
 However, this is generally frowned upon in clean software engineering 
@@ -132,15 +162,13 @@ because it defeats the whole purpose of using a stack wrapper.
 std::stack does not inherit from std::deque ("is-a" relationship).
 Instead, std::stack uses composition ("has-a" relationship).
 
-
 Iterators Deque
 Because std::deque is a fully featured, standalone sequential container (unlike std::stack), 
 it provides a rich set of iterators to let you traverse its elements in any direction. 
 Specifically, std::deque provides Random Access Iterators. This means its iterators act very much like raw pointers; 
 you can use them to move forward, backward, or jump directly to any element in $O(1)$ constant time using math (like it + 5).
 
-Inside the C++ Standard Library, the creators of std::stack didn't just hardcode it to use a std::deque. They gave it a public nickname—a type alias—called container_type.
-
-
+Inside the C++ Standard Library, the creators of std::stack didn't just hardcode it to use a std::deque. 
+They gave it a public nickname—a type alias—called container_type.
 
 */

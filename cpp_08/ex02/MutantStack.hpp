@@ -4,7 +4,8 @@
 template <typename T>
 class MutantStack : public std::stack<T>{
 public:
-    // 1Define your own custom type names using typedef //Tell the compiler what the name 'iterator' actually means
+    // 1Define your own custom type names using typedef 
+    // Tell the compiler what the name 'iterator' actually means
     // your code automatically stays compatible even if someone creates a MutantStack<int, std::vector<int>>. 
     // It looks up whatever the underlying container is and grabs its specific iterator.
     // typedef is creating a shortcut nickname for a type.
