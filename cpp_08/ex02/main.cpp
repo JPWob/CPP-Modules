@@ -9,7 +9,7 @@
 
 // public:
 
-//     typedef Container container_type; // container_type gets stored
+//     typedef Container container_type; // container_type is Container, this is just cpp standardization
     
 //     // We explicitly write wrapper functions to expose ONLY what we want
 //     void push(const T& val) {

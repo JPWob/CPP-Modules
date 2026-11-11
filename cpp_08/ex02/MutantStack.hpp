@@ -1,84 +1,87 @@
 #include <iostream>
 #include <stack>
 
-// Container        is a template parameter that expands to eg. std::vector<int>
-// c                is a protected member variabel of std::stack<T, Container> (protected: std::vector<int> c;). It holds the actual container data.
-// container_type   is a public type alias defined inside std::stack(public: typedef Container container_type;) therefore inherited by MutantStack). It allows external code to reference the exact underlying container type.
+// std::stack<T, Container>
+// T                is a type parameter for the type of elements stored in the stack (eg. int, std::string, etc.)
+// Container        is a type parameter for the underlying container type that expands to eg. std::vector<int>
+// container_type   is a public type alias for "Container". public: typedef Container container_type;. It gets inherited by MutantStack. It allows external code to reference the exact underlying container type.
+// c                is a member variabel of std::stack<T, Container>. It is protected: container_type c;. It holds the actual container data.
+// MutantStack      is an object of type std::stack (through public inheritance). That object has all the capabilities of a std::stack, plus the extra iterator functions you wrote.
+//                  Because it IS a std::stack, you can pass a MutantStack into any function that expects a regular std::stack by reference or value.
 
 template <typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>{
 public:
-	/*
-	To make MutantStack Iterable, define template iterators to use
-		- use typedef
-		- Normally
-			$ typedef std::vector<int>::iterator iterator;
-		
-		- For a default std::stack<int> defining it look like
-			$ typedef std::stack<int>::container_type::iterator iterator; //You define iterator, but you have no way to get an iterator from a standard stack
-			>> defaults to typedef  std::deque<int>::iterator iterator)
-		
-		- In case of template, where T (data type) and container_type are unknown
-			$ typedef typename std::stack<T>::container_type::iterator iterator;
-	*/
-	// Container stands for std::stack<T, Container>::container_type
-    // typedef is creating a shortcut nickname for a type.
-    // typename is reassuring the compiler that a nested template match is a type and not a variable.
-    // A const_iterator allows you to read the data, but prevents you from accidentally modifying it
-    // A const_iterator acts like a pointer-to-const data: the iterator itself is free to move around and point to different positions in memory, but you cannot use it to modify the values it points to
-
 	
-	// Default Constructor | Usag: MutantStack<int> default;
+    // First define Canonic Form
+
+    // (C++11 and later): Inherit all constructors from std::stack, No need to write out
+    // using std::stack<T, Container>::stack;
+	
+	// Default Constructor
+    // Use: MutantStack<int> default;
+    // This is a derived class constructor that calls the default constructor of the base. this line ensures that the underlying std::stack is properly built before your custom stack object comes to life.
+    // Actually MutantStack(){}; will work fine, but good practice is:
     MutantStack() : std::stack<T, Container>(){};
 
-	// Container Constructor
-	// Usage: std::deque<int> d = {1, 2, 3}; MutantStack<int> myStack(d);
-    // I am using the std::stack constructor to initialize the base class portion of my MutantStack object with the provided container. This ensures that the underlying container of the stack is properly initialized with the elements from the provided container.
-    MutantStack(const Container& some_container_object) 
-		: std::stack<T, Container>(some_container_object){};
-
 	// Copy Constructor
-	// use std::stack copy constructor because variables live in there anyway
+	// Use: MutantStack<int> stack1; MutantStack<int> stack2(stack1);
+	// using std::stack copy constructor because variables live in there anyway
     MutantStack(const MutantStack& src)
-		: std::stack<T, Container>(src) {}
-
+    : std::stack<T, Container>(src) {};
+    
 	// Copy Assignment
-	// use std::stack because variables live in there anyway
+	// using std::stack because variables live in there anyway
     MutantStack& operator=(const MutantStack& src){
         if(this != &src){
             std::stack<T, Container>::operator=(src);
         }
         return *this;
     };
-
+    
+    //Destructor
     ~MutantStack(){};
 
-    // (C++11 and later): Inherit all constructors from std::stack 
-    // using std::stack<T, Container>::stack;
+    // Optional
+    // Container Parameter Constructor
+    // Use: std::deque<int> d = {1, 2, 3}; MutantStack<int> myStack(d);
+    // Using std::stack constructor to initialize the base class portion of my MutantStack object with the provided container. This ensures that the underlying container of the stack is properly initialized with the elements from the provided container.
+    MutantStack(const Container& some_container_object) 
+        : std::stack<T, Container>(some_container_object){};
 
+    // Use typedef to create type aliases for iterators
 
     typedef typename Container::iterator iterator;
-    typedef typename std::stack<T, Container>::container_type::const_iterator const_iterator; //other way to write the above
+    typedef typename std::stack<T, Container>::container_type::const_iterator const_iterator; //other way to write the above "Container::iterator"
 
     typedef typename Container::reverse_iterator reverse_iterator;
     typedef typename Container::const_reverse_iterator const_reverse_iterator;
 
     /* 
 		Because MutantStack is a template class, the compiler cannot immediately see 
-		the members of the base class during the first phase of parsing.
+		the members of the Base class during the first phase of parsing.
+        So container_type c;  of the base class std::stack is not visible!
 		By tying c to this->, you turn c into a dependent name and enforce the Two-Phase Lookup: waiting until instantiation time to look up those dependent names
+        Otheriwise compiler will throw an error saying "c was not declared in this scope".
     */
 	iterator begin() {
         return this->c.begin(); 
     }
 
+    /*
+    Why all the sudden can I access member functions of container_type c like this->c.begin()?
+    -> c is a protected member of std::stack and is inherited by MutantStack
+    -> protected means the class itself and any child classescan touch it.
+    -> std::stack could access begin()/end() but the whole point of a stack is to hide these functions by making c protected, So the global scope cannot access c.begin()/c.end() directly.
+    -> So for this exercise, MutantStack uses member functions of c, and is allowed to do so
+    */
+
     iterator end() {
         return std::stack<T, Container>::c.end();  //other way to write it
     }
 
-
-    const_iterator begin() const{    //compiler automatically changes the type of the this pointer from MutantStack* to const MutantStack*.
-        return this->c.begin();     //You don't need to type const inside the body because the compiler used the constness of this to figure it all out for you before it even reached the .rbegin() call!
+    const_iterator begin() const{    
+        return this->c.begin();     // No need type const inside the body because the compiler used the constness of this to figure it all out for you before it even reached the .begin() call! //compiler automatically changes the type of the this returned iterator from to const 
     }
 
     const_iterator end() const{
@@ -104,6 +107,15 @@ public:
 
 };
 
+
+
+/*
+What MutantStack look like if it stored a stack? (Composition / "Has-A")
+
+
+
+
+*/
 
 
 
