@@ -3,8 +3,8 @@ CPP = c++
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-SRCS = main.cpp Span.cpp
-NAME = Span
+SRCS = main.cpp
+NAME = MutantStack
 
 # Object files go into .o/ folder
 OBJDIR = .obj

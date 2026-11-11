@@ -1,7 +1,11 @@
 #include <iostream>
 #include <stack>
 
-template <typename T, typename Container = std::deque<T>>
+// Container        is a template parameter that expands to eg. std::vector<int>
+// c                is a protected member variabel of std::stack<T, Container> (protected: std::vector<int> c;). It holds the actual container data.
+// container_type   is a public type alias defined inside std::stack(public: typedef Container container_type;) therefore inherited by MutantStack). It allows external code to reference the exact underlying container type.
+
+template <typename T, typename Container = std::deque<T> >
 class MutantStack : public std::stack<T, Container>{
 public:
 	/*
@@ -29,8 +33,9 @@ public:
 
 	// Container Constructor
 	// Usage: std::deque<int> d = {1, 2, 3}; MutantStack<int> myStack(d);
-    MutantStack(const typename std::stack<T, Container>::container_type& container) 
-		: std::stack<T, Container>(container){};
+    // I am using the std::stack constructor to initialize the base class portion of my MutantStack object with the provided container. This ensures that the underlying container of the stack is properly initialized with the elements from the provided container.
+    MutantStack(const Container& some_container_object) 
+		: std::stack<T, Container>(some_container_object){};
 
 	// Copy Constructor
 	// use std::stack copy constructor because variables live in there anyway
@@ -48,12 +53,15 @@ public:
 
     ~MutantStack(){};
 
+    // (C++11 and later): Inherit all constructors from std::stack 
+    // using std::stack<T, Container>::stack;
 
-    typedef typename std::stack<T>::container_type::iterator iterator;
-    typedef typename std::stack<T>::container_type::const_iterator const_iterator;
 
-    typedef typename std::stack<T>::container_type::reverse_iterator reverse_iterator;
-    typedef typename std::stack<T>::container_type::const_reverse_iterator const_reverse_iterator;
+    typedef typename Container::iterator iterator;
+    typedef typename std::stack<T, Container>::container_type::const_iterator const_iterator; //other way to write the above
+
+    typedef typename Container::reverse_iterator reverse_iterator;
+    typedef typename Container::const_reverse_iterator const_reverse_iterator;
 
     /* 
 		Because MutantStack is a template class, the compiler cannot immediately see 
