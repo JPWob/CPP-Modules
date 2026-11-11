@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm> // Required for std::sort
-#include <climits>
+#include <ctime>
+#include <exception>
 
 class Span {
 private:
@@ -17,21 +18,21 @@ public:
     void addRandomNumbers(unsigned int quantity);
 
     template <typename Iterator>
-    void addNumbers(Iterator begin, Iterator end) {
+    void addItRange(Iterator begin, Iterator end) {
         
-		//typename std::iterator_traits<Iterator>::difference_type distance = std::distance(begin, end); //more portable
-        // for (Iterator it = begin; it != end; ++it) {     //Wrong!!! segfault if some passes begin and end in reverse
-        //     ++distance;
-        // }
+        // subtracts the two memory addresses: end - begin. (if its a continuous vector type like vector)
+        long long distance = std::distance(begin, end);
 
-        long long distance = std::distance(begin, end); // subtracts the two memory addresses: end - begin. (if its a continuous vector type like vector)
+        // most robust way to write it in C++, gets the correct distance type dynamically
+		//typename std::iterator_traits<Iterator>::difference_type distance = std::distance(begin, end); 
+        
         if(distance < 0)
             throw std::runtime_error("Invalid iterator range: begin comes after end.");
-        
-        if (_vector.size() + (distance) > _N) {
+
+        if ((_N - _vector.size()) < static_cast<unsigned int>(distance)) {
             throw std::runtime_error("Cannot add as much numbers: would exceed maximum capacity N.");
         }
-        _vector.insert(_vector.end(), begin, end);
+        _vector.insert(_vector.end(), begin, end); //Insert the range in a single call
     }
 
 };

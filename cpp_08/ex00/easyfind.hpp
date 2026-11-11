@@ -2,15 +2,14 @@
 #include <vector>
 
 template <typename T>
-int easyfind(const T& container, int n){
-    int index = 0;
-    for(typename T::const_iterator it = container.begin(); it != container.end(); ++it){
+typename T::iterator easyfind(T& container, int n){
+    typename T::iterator it;
+    for(it = container.begin(); it != container.end(); ++it){
         if(*it == n){
-            return index;
+            return it;
         }
-        ++index;
     }
-    return -1;
+    return container.end();
 }
 
 
@@ -58,4 +57,11 @@ container.end() is an iterator object
     - it is not the size of the container
     - it is an iterator that points to the imaginary slot just after the last element.
 
+
+Associative containers
+- specialized data structures that store elements in a sorted order
+- std::set/ std::map
+- maps store data as key-value pairs (std::pair<Key, Value>)
+- sets store unique keys.
+- *it evaluates to a std::pair<const int, std::string>, not just a plain int -> more coplex
 */

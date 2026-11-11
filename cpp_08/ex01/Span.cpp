@@ -1,7 +1,5 @@
 #include "Span.hpp"
 
-
-
 long long Span::longestSpan(){
 	if(_vector.size() <= 1)
 		throw std::logic_error("Not enough elements to find a span.");
@@ -22,7 +20,7 @@ long long Span::shortestSpan(){
 
 	long long min_span = LLONG_MAX;
 
-	for(size_t i = 0; i < cpy.size() -1; ++i)
+	for(size_t i = 0; i < cpy.size() - 1; ++i)
 	{
 		long long span = cpy[i + 1] - cpy[i];
 		if(span < min_span){
@@ -52,7 +50,6 @@ void Span::addRandomNumbers(unsigned int quantity) {
 
 
 Span::Span(unsigned int N) : _N(N){
-
   _vector.reserve(N);
   //std::cout << "Span vector constructed" << std::endl;
 }
