@@ -1,43 +1,68 @@
-
-
-// { Under the hood std::stack implementation
-
-// template <typename T, typename Container = std::deque<T>>
-// class stack{
-// private:
-//     container_type c;   //-> Composition: MyStack "has-a" std::vector
-
-// public:
-
-//     typedef Container container_type; // container_type is Container, this is just cpp standardization
-    
-//     // We explicitly write wrapper functions to expose ONLY what we want
-//     void push(const T& val) {
-//         c.push_back(val); // Uses vector's push_back
-//     }
-
-//     void pop(){
-//        c.pop_back;
-//     }
-
-//     //  There are NO definitions for begin(), end(), operator[], or insert().
-// }
-
-
-// }
-
-
 #include <iostream>
 #include <stack>
 #include <deque>
 #include <vector>
+#include <list>
 #include "MutantStack.hpp"
 
 void printSeparator(const std::string& title) {
     std::cout << "\n--- " << title << " ---\n";
 }
 
+// push_back belongs to Sequence Containers (std::vector, std::list, std::deque)
+// push belongs to Container Adaptors (std::stack, std::queue
+
 int main() {
+
+	{
+		//Test main() from subject
+
+		MutantStack<int> mstack;
+
+		mstack.push(5);
+		mstack.push(17);
+		std::cout << mstack.top() << std::endl;
+		mstack.pop();
+		std::cout << mstack.size() << std::endl;
+		mstack.push(3);
+		mstack.push(5);
+		mstack.push(737);
+		//[...]
+		mstack.push(0);
+		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int>::iterator ite = mstack.end();
+		++it;
+		--it;
+		while (it != ite){
+			std::cout << *it << std::endl;
+			++it;
+		}
+		std::stack<int> s(mstack);
+
+		std::cout << "Test with std::list to compare behavior " << std::endl;
+	    std::list<int> lst;
+
+	    lst.push_back(5);
+	    lst.push_back(17);
+	    std::cout << lst.back() << std::endl; // .top() becomes .back()
+	    lst.pop_back();                       // .pop() becomes .pop_back()
+	    std::cout << lst.size() << std::endl;
+	    lst.push_back(3);
+	    lst.push_back(5);
+	    lst.push_back(737);
+	    lst.push_back(0);
+
+	    std::list<int>::iterator it1 = lst.begin();
+	    std::list<int>::iterator ite2 = lst.end();
+	    ++it1;
+	    --it1;
+	    while (it1 != ite2){
+	        std::cout << *it1 << std::endl;
+	        ++it1;
+	    }
+
+	}
+
     
     // ==========================================
     // TEST 1: Default Constructor & Basic Ops
@@ -78,11 +103,11 @@ int main() {
         my_deque.push_back(20);
         my_deque.push_back(30);
     
-        MutantStack<int> stackDeque(my_deque);
+        MutantStack<int> mstackDeque(my_deque);
         std::stack<int> realStackDeque(my_deque); // For comparison
 
-        std::cout << "MutantStack from Deque top: " << stackDeque.top() << " (Expected: 30)\n";
-        std::cout << "MutantStack from Deque size: " << stackDeque.size() << " (Expected: 3)\n";
+        std::cout << "MutantStack from Deque top: " << mstackDeque.top() << " (Expected: 30)\n";
+        std::cout << "MutantStack from Deque size: " << mstackDeque.size() << " (Expected: 3)\n";
         std::cout << "RealStack from Deque top: " << realStackDeque.top() << " (Expected: 30)\n";
         std::cout << "RealStack from Deque size: " << realStackDeque.size() << " (Expected: 3)\n";
 
@@ -93,20 +118,18 @@ int main() {
         // TEST 2b: Vector Container Constructor  (Explicitly overriding container type)
         // ==========================================
         printSeparator("TEST 2b: Vector Container Constructor");
-
-        // 2b. Vector container constructor (Explicitly overriding container type)
-        // Note: C++98 requires space between brackets: > >
         
-        MutantStack<int, std::vector<int> > mstackFromVector;
         
         std::vector<int> my_vector;
         my_vector.push_back(100);
         my_vector.push_back(200);
         
+        MutantStack<int, std::vector<int> > mstackVector(my_vector);
+
 
         std::stack<int, std::vector<int> > realStackFromVector(my_vector); // For comparison
-        std::cout << "MutantStack from Vector top: " << mstackFromVector.top() << " (Expected: 200)\n";
-        std::cout << "MutantStack from Vector size: " << mstackFromVector.size() << " (Expected: 2)\n";
+        std::cout << "MutantStack from Vector top: " << mstackVector.top() << " (Expected: 200)\n";
+        std::cout << "MutantStack from Vector size: " << mstackVector.size() << " (Expected: 2)\n";
     }
 
     {

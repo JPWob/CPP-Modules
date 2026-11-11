@@ -6,10 +6,14 @@
 
 class Span {
 private:
-    std::vector<int> _vector;
-    unsigned int _N;
+    std::vector<int> 	_vector;
+    unsigned int 		_N;
+	
 public:
     Span(unsigned int N);
+	Span(const Span& src);
+	Span& operator=(const Span& other);
+	~Span();
 
 	long long shortestSpan();
 	long long longestSpan();
@@ -24,7 +28,7 @@ public:
         long long distance = std::distance(begin, end);
 
         // most robust way to write it in C++, gets the correct distance type dynamically
-		//typename std::iterator_traits<Iterator>::difference_type distance = std::distance(begin, end); 
+		// typename std::iterator_traits<Iterator>::difference_type distance = std::distance(begin, end); 
         
         if(distance < 0)
             throw std::runtime_error("Invalid iterator range: begin comes after end.");
@@ -42,14 +46,6 @@ public:
 
 _vector.insert(_vector.end(), begin, end);
     _vector.insert(where to put them inside _vector, where the src data starts , where the src data ends.)
-
-
-Breaking down the syntax:
-This is the heavy type name for the iterator variable.
-    std::vector<int>::const_iterator it
-
-In your template function, because the vector is generic and const, this becomes 
-    typename T::const_iterator).
 
 
 */

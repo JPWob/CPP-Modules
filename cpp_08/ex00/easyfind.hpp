@@ -13,6 +13,10 @@ typename T::iterator easyfind(T& container, int n){
 }
 
 
+std::vector<int> vector;
+
+
+
 /*
 std::find
 In the STL, searching for an element is decoupled from the containers themselves 

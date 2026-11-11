@@ -3,6 +3,18 @@
 
 int main()
 {
+
+	{// main() from subjects
+		Span sp = Span(5);
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
+	}
+
 	std::srand(static_cast<unsigned int>(std::time(NULL)) ^ static_cast<unsigned int>(std::clock()) );
 
 	Span sp(20005);
@@ -39,7 +51,7 @@ int main()
         sourceVector.push_back(std::rand());
     }
 	
-	Span empty(500);
+	Span empty(1001);
 	
 	std::cout << "Add elements of a vector to my Span" <<  std::endl;
 	try{

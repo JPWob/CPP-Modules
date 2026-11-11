@@ -1,4 +1,7 @@
+#include <algorithm>  
 #include "easyfind.hpp"
+
+//std::find Returns an iterator to the first element in the range [first,last) that compares equal to val. If no such element is found, the function returns last.
 
 int main() {
     std::vector<int> numbers; //= {10, 20, 30, 40}; Initilazier list does not exist in +98

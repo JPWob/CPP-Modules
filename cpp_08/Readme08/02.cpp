@@ -55,21 +55,32 @@ empty()						          Returns true if the stack has no elements, false otherwis
 💡💡💡The Structure Under the Hood💡💡💡
 Inside the C++ Standard Library source code, std::stack is defined roughly like this:
 
-    template <typename T, typename Container = std::deque<T>>
-    class stack {
-    public:
-        // 1. The Magic Shortcut (Publicly visible to everyone)
-        typedef Container container_type; 
 
-        // Standard public functions that everyone uses
-        void push(const T& value) { c.push_back(value); }
-        void pop()                { c.pop_back(); }
-        T& top()                  { return c.back(); }
+	template <typename T, typename Container = std::deque<T>>
+	class stack{
+	protected:
+	    container_type c;   //-> Composition: MyStack "has-a" std::vector
 
-    protected:
-        // 2. The Inner Data Storage (Only visible to stack and its children)
-        Container c; 
-    };
+	public:
+
+	    typedef Container container_type; // container_type is Container, this is just cpp standardization
+	    
+	    // We explicitly write wrapper functions to expose ONLY what we want
+
+	    void push(const T& val) {
+	        c.push_back(val); 			// Uses vector's push_back
+	    }
+
+	    void pop(){
+	       c.pop_back;
+	    }
+
+		// ... top(), size(), empty()
+	    // There are NO definitions for begin(), end(), operator[], or insert().
+	}
+
+
+	}
 
 typedef (The Nickname Creator)
 - A way to create a shorthand alias for a type that already exists.
@@ -170,5 +181,24 @@ you can use them to move forward, backward, or jump directly to any element in $
 
 Inside the C++ Standard Library, the creators of std::stack didn't just hardcode it to use a std::deque. 
 They gave it a public nickname—a type alias—called container_type.
+
+*/
+
+
+
+
+/*
+What MutantStack look like if it stored a stack? (Composition / "Has-A")
+
+
+template <typename T, typename Container = std::deque<T> >
+class MutantStack{
+private
+
+	std::stack<T, Container> _stack;
+
+public:
+
+}
 
 */

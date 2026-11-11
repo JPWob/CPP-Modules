@@ -1,6 +1,28 @@
 #include <iostream>
 #include <stack>
 
+
+/* Under the hood std::stack implementation
+
+	template <typename T, typename Container = std::deque<T>>
+	class stack{
+	protected:
+	    container_type c;  					 //-> Composition: MyStack "has-a" std::vector
+
+	public:
+
+	    typedef Container container_type;	// container_type is Container, this is just cpp standardization
+	    
+		// Stack Operations. These functions use c member functions
+		push(value) / emplace(...) 	Adds an element to the top of the stack.
+		pop()						Removes the element at the very top. (Note: This returns void, it does not return the value!)
+		top()                       Returns a reference to the element at the top without removing it.
+		size()						Returns the number of elements currently in the stack.
+		empty()	
+	}
+
+ */
+
 // std::stack<T, Container>
 // T                is a type parameter for the type of elements stored in the stack (eg. int, std::string, etc.)
 // Container        is a type parameter for the underlying container type that expands to eg. std::vector<int>
@@ -100,22 +122,11 @@ public:
         return this->c.rbegin();         //gets std::deque::rbegin() const
     }
 
-
     const_reverse_iterator rend() const{
         return this->c.rend();
     }
 
 };
-
-
-
-/*
-What MutantStack look like if it stored a stack? (Composition / "Has-A")
-
-
-
-
-*/
 
 
 
