@@ -4,7 +4,7 @@ CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp BitcoinExchange.cpp
-NAME = BitcoinExchange
+NAME = btc
 
 # Object files go into .o/ folder
 OBJDIR = .obj

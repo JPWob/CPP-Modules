@@ -1,7 +1,5 @@
 #include "BitcoinExchange.hpp"
 
-
-
 bool getDate(std::stringstream& ss, std::string& date){
     std::getline(ss, date, '|');
     ss.clear();
