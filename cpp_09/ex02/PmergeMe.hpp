@@ -5,6 +5,67 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
+#include <sys/time.h>
+#include <iomanip>
+
+
+
+struct ItemVector {
+    unsigned int id;
+    unsigned int value;
+
+    static size_t comparisons; // Shared counter across all ItemVector comparisons
+
+    ItemVector(unsigned int n = 0, unsigned int id = 0) :  id(id), value(n){};
+
+    bool operator>(const ItemVector& b) const{
+        comparisons++;
+        return(this->value > b.value);
+
+    }
+
+    bool operator<(const ItemVector& b) const{
+        comparisons++;  
+        return(this->value < b.value);
+    }
+
+    bool operator==(const ItemVector& b) const{
+        comparisons++;
+        return(this->id == b.id);
+    }
+};
+
+
+
+struct ItemDeque {
+    unsigned int id;
+    unsigned int value;
+
+    static size_t comparisons; // Shared counter across all ItemVector comparisons
+
+    ItemDeque(unsigned int n = 0, unsigned int id = 0) :  id(id), value(n){};
+
+    bool operator>(const ItemDeque& b) const{
+        comparisons++;
+        return(this->value > b.value);
+
+    }
+
+    bool operator<(const ItemDeque& b) const{
+        comparisons++;  
+        return(this->value < b.value);
+    }
+
+    bool operator==(const ItemDeque& b) const{
+        comparisons++;
+        return(this->id == b.id);
+    }
+};
+
+std::vector<ItemVector> sort_vector(std::vector<ItemVector>& vec, int argc);
+std::deque<ItemDeque>   sort_deque(std::deque<ItemDeque>& deq, int argc);
+double                  get_time_us();
+bool                    parse_positive_int(const char* str, unsigned int& out) ;
 
 //std::vector<Item>&  sort_vector(std::vector<Item>& vec);
 
