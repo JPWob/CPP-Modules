@@ -12,7 +12,7 @@ bool parse_positive_int(const char* str, unsigned int& out) {
             return false; // rejects '-', '+', spaces, letters
         }
         unsigned int digit = static_cast<unsigned int>(*p - '0');
-        if (val > (INT_MAX - digit) / 10) { // use UINT_MAX if you want full unsigned int range
+        if (val > (std::numeric_limits<int>::max() - digit) / 10) { // use UINT_MAX if you want full unsigned int range
             return false; // overflow
         }
         val = val * 10 + digit;

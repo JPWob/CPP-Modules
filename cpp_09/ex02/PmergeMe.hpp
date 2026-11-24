@@ -7,7 +7,15 @@
 #include <algorithm>
 #include <sys/time.h>
 #include <iomanip>
+#include <limits>
 
+
+/*
+Test cmd
+	./PmergeMe $(shuf -i 1-100000 -n 50 | tr "\n" " ")
+	./PmergeMe $(shuf -i 1-100000 -n 3000 | tr "\n" " ")
+
+*/
 
 
 struct ItemVector {
@@ -30,7 +38,7 @@ struct ItemVector {
     }
 
     bool operator==(const ItemVector& b) const{
-        comparisons++;
+        //comparisons++;
         return(this->id == b.id);
     }
 };
@@ -57,7 +65,7 @@ struct ItemDeque {
     }
 
     bool operator==(const ItemDeque& b) const{
-        comparisons++;
+        //comparisons++;
         return(this->id == b.id);
     }
 };

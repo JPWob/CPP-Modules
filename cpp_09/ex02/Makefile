@@ -4,7 +4,7 @@ CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
 SRCS = main.cpp helper.cpp
-NAME = PmergeME
+NAME = PmergeMe
 
 # Object files go into .o/ folder
 OBJDIR = .obj
