@@ -1,8 +1,6 @@
 #include "BitcoinExchange.hpp"
 
-bool getDate(std::stringstream& ss, std::string& date){
-    std::getline(ss, date, '|');
-    ss.clear();
+bool getDate(std::string& date){
     if(!isValidDate(date)){
         std::cerr << "Error: invalid date format: "<< date << std::endl;
         return false;
@@ -10,9 +8,12 @@ bool getDate(std::stringstream& ss, std::string& date){
     return true;
 }
 
-bool getFactor(std::stringstream& ss, double& factor){
+bool getFactor(std::string& line, double& factor){
     
     char leftover;
+	std::stringstream ss(line);
+
+
     if(ss >> factor && !(ss >> leftover)){
         if(factor < 0){
             std::cerr << "Error: not a positive number." << std::endl;
@@ -26,7 +27,7 @@ bool getFactor(std::stringstream& ss, double& factor){
     }
     else{
         ss.clear();
-        std::cerr << "Error: bad input => " << ss.str() << std::endl;
+        std::cerr << "Error: bad input2 => " << ss.str() << std::endl;
         return false;
     }
 }
@@ -47,21 +48,11 @@ bool isValidDate(std::string& date) {
     if (date.length() != 11)
         return false;
 
-    // 2. Must have dashes at indices 4 and 7
-    if (date[4] != '-' || date[7] != '-' || date[10] != ' ') 
-        return false;
-
     // 3. Every other character must be a digit
-    for (size_t i = 0; i < 10; ++i) {
-        if (i == 4 || i == 7) 
-            continue;
-        if (!std::isdigit(date[i]))
-            return false;
-    }
     
-    int year  = std::atoi(date.substr(0, 4).c_str());   //std::atoi is legacy functions that expects a C-style string (null-terminated character array) as input.
-    int month = std::atoi(date.substr(5, 2).c_str());
-    int day   = std::atoi(date.substr(8, 2).c_str());
+    int year  = (date[0] - '0') * 1000 + (date[1] - '0') * 100 + (date[2] - '0') * 10   + (date[3] - '0');
+    int month = (date[5] - '0') * 10   + (date[6] - '0');
+    int day   = (date[8] - '0') * 10   + (date[9] - '0');
     
     if (year < 2009 || year > 2026){
         std::cerr << "Error: invalid year: " << year << ". Please stay within 2009 and 2026" << std::endl;
@@ -71,13 +62,30 @@ bool isValidDate(std::string& date) {
         std::cerr << "Error: invalid date: " << date << std::endl;
         return false;
     }
+	int daysInMonth[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0))
+        daysInMonth[1] = 29;
+
+    if (day > daysInMonth[month - 1]) {
+        std::cerr << "Error: invalid date: " << date << std::endl;
+        return false;
+    }
     return true;
 }
 
-bool findDelimiter(std::string& line){
-    if(line.find('|') == std::string::npos){
-        std::cerr << "Error: bad input => " << line << std::endl;
+bool checkFormat(std::string& line){
+
+    if (line[4] != '-' || line[7] != '-' || line[10] != ' ' || line[11] != '|'){
+        std::cerr << "Error: bad format1 => " << line << std::endl;
         return false;
+    }
+	for (size_t i = 0; i < 10; ++i) {
+        if (i == 4 || i == 7) 
+            continue;
+        if ((line[i] < '0' || line[i] > '9')){
+        	std::cerr << "Error: bad format2 => \"" << line << "\" Buchtsabe " << line[i] << " Index " << i << std::endl;
+        	return false;
+    	}
     }
     return true;
 }
@@ -85,12 +93,17 @@ bool findDelimiter(std::string& line){
 
 
 bool getCsvData(std::map<std::string, double>& map_csv){
-    std::ifstream data("data.csv");
-    std::string csv_line;
-    if(!data.is_open()){
+    
+	//OPEN
+	std::ifstream	data("data.csv");
+    std::string		csv_line;
+    
+	//check if open csv
+	if(!data.is_open()){
         std::cerr << "Error: could not open data.csv" << std::endl;
         return false;
     }
+	//discard first line
     std::getline(data, csv_line);
     
     while(std::getline(data, csv_line)){

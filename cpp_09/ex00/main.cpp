@@ -11,11 +11,11 @@ int main(int argc, char* argv[]){
     
     // Create a map to hold the CSV data
     std::map<std::string, double> map_csv;
-    if(! getCsvData(map_csv)){
+    if(!getCsvData(map_csv)){
         return 1;
     }
     // Process Input file
-    if(! input_file(map_csv, argv[1])){
+    if(!input_file(map_csv, argv[1])){
         return 1;
     }
 
@@ -33,36 +33,34 @@ int main(int argc, char* argv[]){
 
 
 int input_file(std::map<std::string, double>& map_csv, char*& filename ){
-    // Create stream, open file
+    
+	// Create stream, open file
     std::ifstream inFile(filename);
     if(!inFile.is_open()){
         std::cerr << "Error opening file: "<< filename << std::endl;
         return -1; 
     }
     
-    // Read the file line by line
     std::string line;
     std::string date;
-    double factor;
-    bool isFirstLine = true;
-
-    while(std::getline(inFile, line)){      //reading one line
-        if(isFirstLine)                 //check for header, skip line if it is a header
-        {                    
-            isFirstLine = false;
-            if(isHeader(line)) continue;
+    double	factor;
+	
+	std::getline(inFile, line);
+	if(!isHeader(line)){
+		std::cerr << "Error in Header Input file "<< filename << std::endl;
+        return -1; 
+	}
+	
+	// Read the file line by line
+    while(std::getline(inFile, line)){						//reading one line
+        if(!checkFormat(line))
+            continue; 
+        if(!getDate(line) || !getFactor(line, factor)){
+            continue;
         }
-        else
-        {
-            if(!findDelimiter(line))
-                continue;
-            std::stringstream ss(line);     //line to stream, 
-            if(!getDate(ss, date) || !getFactor(ss, factor)){
-                continue;
-            }
-            printValue(map_csv, date, factor);
-        }
-        continue;
+		date = line.substr(0, 9);
+        printValue(map_csv, date, factor);
+        
     }
     return 1;
 }
